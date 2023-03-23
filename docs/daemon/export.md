@@ -6,9 +6,9 @@ order: 4
 
 ## Introduction
 
-IRIShub can export the blockchain state and output to a json-format string which can be used as the genesis file of a new blockchain.
+FURYhub can export the blockchain state and output to a json-format string which can be used as the genesis file of a new blockchain.
 
-By default, IRIShub stores snapshots of every 10,000 blocks and the last 100 blocks. You can export the blockchain state from any existing snapshot height.
+By default, FURYhub stores snapshots of every 10,000 blocks and the last 100 blocks. You can export the blockchain state from any existing snapshot height.
 
 If you want to export the state from a nonexisting snapshot height, you need to [reset](local-testnet.md#fury-reset) the blockchain state to the specified height first.
 

@@ -4,7 +4,7 @@ order: 1
 
 # Introduction
 
-The `fury` executable program is the entry point for running an IRIShub node. All the validator nodes and full nodes need to install the `fury` and launching the daemon to join the IRIShub network. You can also use `fury` to start your own test network locally.
+The `fury` executable program is the entry point for running an FURYhub node. All the validator nodes and full nodes need to install the `fury` and launching the daemon to join the FURYhub network. You can also use `fury` to start your own test network locally.
 
 ## Hardware Requeirment
 
@@ -27,7 +27,7 @@ In the `fury` command, you can specify the home directory of the node by using f
 
 The `fury init` command is responsible for initializing the specified `--home` directory and creating the default configuration files. Except the `fury init` command, the home directory used by any other `fury` sub commands must be initialized, otherwise an error will be reported.
 
-The data of the IRIShub node is stored in the `data` directory of the home, including blockchain data, application layer data, and index data.
+The data of the FURYhub node is stored in the `data` directory of the home, including blockchain data, application layer data, and index data.
 
 All configuration files are stored in the `<home-dir>/config` directory:
 
@@ -49,4 +49,4 @@ config.toml is the non-consensus configuration of the node. Different nodes can 
 
 ### app.toml
 
-app.toml provides base configuration, telemetry configuration, API configuration, gRPC configuration and state sync configuration for IRIShub.
+app.toml provides base configuration, telemetry configuration, API configuration, gRPC configuration and state sync configuration for FURYhub.

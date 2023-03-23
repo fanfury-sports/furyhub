@@ -13,14 +13,14 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/furynet/furymod/modules/htlc"
-	"github.com/furynet/furymod/modules/oracle"
-	"github.com/furynet/furymod/modules/random"
-	"github.com/furynet/furymod/modules/service"
+	"github.com/irisnet/irismod/modules/htlc"
+	"github.com/irisnet/irismod/modules/oracle"
+	"github.com/irisnet/irismod/modules/random"
+	"github.com/irisnet/irismod/modules/service"
 )
 
 // ExportAppStateAndValidators exports the state of the application for a genesis file.
-func (app *IrisApp) ExportAppStateAndValidators(
+func (app *FuryApp) ExportAppStateAndValidators(
 	forZeroHeight bool, jailAllowedAddrs []string,
 ) (servertypes.ExportedApp, error) {
 	// as if they could withdraw from the start of the next block
@@ -53,7 +53,7 @@ func (app *IrisApp) ExportAppStateAndValidators(
 // NOTE zero height genesis is a temporary feature which will be deprecated
 //
 //	in favour of export at a block height
-func (app *IrisApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []string) {
+func (app *FuryApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []string) {
 	applyAllowedAddrs := false
 
 	// check if there is a allowed address list
@@ -216,6 +216,6 @@ func (app *IrisApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs [
 // ExportGenesis returns the KVStoreKey for the provided store key.
 //
 // NOTE: This is solely to be used for testing purposes.
-func (app *IrisApp) ExportGenesis(ctx sdk.Context) map[string]json.RawMessage {
+func (app *FuryApp) ExportGenesis(ctx sdk.Context) map[string]json.RawMessage {
 	return app.mm.ExportGenesis(ctx, app.AppCodec())
 }

@@ -10,7 +10,7 @@ For general concepts, please refer to [General Concepts](general-concepts.md)
 
 ## General Questions
 
-### How to Become an IRIShub Validator
+### How to Become an FURYhub Validator
 
 Refer to [Join The Mainnet](../get-started/mainnet.md)
 
@@ -35,7 +35,7 @@ After a validator is created with a `create-validator` transaction, they can be 
 - `bonded`: Validator is in the active set and participates in consensus. Validator is earning rewards and can be slashed for misbehaviour.
 - `unbonding`:
   - Validator misbehaved and is in jail, i.e. outisde of the validator set. If the jailing is due to being offline for too long, the validator can send an `unjail` transaction in order to re-enter the validator set.
-  - Validator is out of the top 100 bonded and become a Candidate, the validator can delegate more IRIS to himself to be in top 100, then he will get bonded automatically.
+  - Validator is out of the top 100 bonded and become a Candidate, the validator can delegate more FURY to himself to be in top 100, then he will get bonded automatically.
 - `unbonded`: Validator is not in the active set, and therefore not signing blocks. Validator cannot be slashed, and does not earn any reward. It is still possible to delegate to this validator.
 
 ### What are the different types of keys
@@ -97,7 +97,7 @@ There are many ways to migrate your validator, the most recommended way is:
 
 Self-delegation is delegation from a validator to himself. This amount can be increased by sending a `delegate` transaction from your validator's operator account which you used to create the validator.
 
-### Is there a minimum amount of IRIS that must be delegated to be an active (=bonded) validator
+### Is there a minimum amount of FURY that must be delegated to be an active (=bonded) validator
 
 The minimum amount is `1 fury`.
 
@@ -107,9 +107,9 @@ By delegating to a validator, an user delegates voting power. The more voting po
 
 Even though delegated funds cannot be stolen by their validators, delegators are still liable if their validators misbehave.
 
-### How often will a validator be chosen to propose the next block? Does it go up with the quantity of bonded IRIS
+### How often will a validator be chosen to propose the next block? Does it go up with the quantity of bonded FURY
 
-The validator that is selected to propose the next block is called proposer. Each proposer is selected deterministically, and the frequency of being chosen is proportional to the voting power (i.e. amount of bonded IRIS) of the validator. For example, if the total bonded stake across all validators is 100 IRIS and a validator's total stake is 10, then this validator will propose ~10% of the blocks.
+The validator that is selected to propose the next block is called proposer. Each proposer is selected deterministically, and the frequency of being chosen is proportional to the voting power (i.e. amount of bonded FURY) of the validator. For example, if the total bonded stake across all validators is 100 FURY and a validator's total stake is 10, then this validator will propose ~10% of the blocks.
 
 ### What is the incentive to stake
 
@@ -123,7 +123,7 @@ Validators also play a major role in governance. If a delegator does not vote, t
 
 ### What are validators commission
 
-Revenue received by a validator's pool is split between the validator and their delegators. The validator can apply a commission on the part of the revenue that goes to their delegators. This commission is set as a percentage. Each validator is free to set their initial commission, maximum daily commission change rate and maximum commission. The IRIS Hub enforces the parameter that each validator sets. Only the commission rate can change after the validator is created.
+Revenue received by a validator's pool is split between the validator and their delegators. The validator can apply a commission on the part of the revenue that goes to their delegators. This commission is set as a percentage. Each validator is free to set their initial commission, maximum daily commission change rate and maximum commission. The FURY Hub enforces the parameter that each validator sets. Only the commission rate can change after the validator is created.
 
 ### What is the formula to calculate the rewards
 
@@ -187,7 +187,7 @@ The default number of files Linux can open (per-process) is `1024`. `fury` is kn
     ```toml
     # /etc/systemd/system/fury.service
     [Unit]
-    Description=IRIS Hub Node
+    Description=FURY Hub Node
     After=network.target
 
     [Service]

@@ -1,6 +1,6 @@
 # Service
 
-Service module allows you to define, bind, invoke services on the IRIS Hub. [Read more about iService](../features/service.md).
+Service module allows you to define, bind, invoke services on the FURY Hub. [Read more about iService](../features/service.md).
 
 ## 可用命令
 
@@ -141,7 +141,7 @@ fury tx service bind [flags]
 | --------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- | -------- |
 | --service-name  |         | Service name                                                                                                                  | Yes      |
 | --deposit       |         | Deposit of the binding                                                                                                        | Yes      |
-| --pricing       |         | Pricing content or file path, which is an instance of [Irishub Service Pricing JSON Schema](../features/service-pricing.json) | Yes      |
+| --pricing       |         | Pricing content or file path, which is an instance of [Furyhub Service Pricing JSON Schema](../features/service-pricing.json) | Yes      |
 | --qos           |         | Minimum response time                                                                                                         | Yes      |
 | --options       |         | Non-functional requirements options                                                                                           | Yes      |
 | --provider      |         | Provider address, default to the owner                                                                                        |          |
@@ -205,13 +205,13 @@ fury tx service update-binding [service-name] [provider-address] [flags]
 | Name, shorthand | Default | Description                                                                                                                                       | Required |
 | --------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | --deposit       |         | Deposit added for the binding, not updated if empty                                                                                               |          |
-| --pricing       |         | Pricing content or file path, which is an instance of [Irishub Service Pricing JSON Schema](../features/service-pricing.md), not updated if empty |          |
+| --pricing       |         | Pricing content or file path, which is an instance of [Furyhub Service Pricing JSON Schema](../features/service-pricing.md), not updated if empty |          |
 | --qos           |         | Minimum response time, not updated if set to 0                                                                                                    |          |
 | --options       |         | Non-functional requirements options                                                                                                               |          |
 
 ### Update an existing service binding
 
-The following example updates the service binding with the additional 10 IRIS deposit
+The following example updates the service binding with the additional 10 FURY deposit
 
 ```bash
 fury tx service update-binding <service-name> <provider-address> \
@@ -264,7 +264,7 @@ fury tx service enable [service-name] [provider-address] [flags]
 
 ### Enable an unavailable service binding
 
-The following example enables an unavailable service binding with the additional 10 IRIS deposit.
+The following example enables an unavailable service binding with the additional 10 FURY deposit.
 
 ```bash
 fury tx service enable <service name> <provider-address> --chain-id=furyhub --from=<key-name> --fees=0.3fury --deposit=10fury
@@ -398,7 +398,7 @@ fury tx service respond [flags]
 | Name, shorthand | Default | Description                                                                                                                                | Required |
 | --------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | --request-id    |         | ID of the request to respond to                                                                                                            | Yes      |
-| --result        |         | Content or file path of the response result, which is an instance of [Irishub Service Result JSON Schema](../features/service-result.json) | Yes      |
+| --result        |         | Content or file path of the response result, which is an instance of [Furyhub Service Result JSON Schema](../features/service-result.json) | Yes      |
 | --data          |         | Content or file path of the response output, which is an Output JSON Schema instance                                                       |          |
 
 ### Respond to a service request

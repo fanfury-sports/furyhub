@@ -4,7 +4,7 @@ order: 4
 
 # Join The Testnet
 
-After IRIS Hub 1.0 upgrade of mainnet, **Nyancat Testnet** starts to operate as a stable application testnet which has the same version as the mainnet, so that the service providers of IRISnet can develop their apps on or interact with IRIShub without running a node or lcd instance.
+After FURY Hub 1.0 upgrade of mainnet, **Nyancat Testnet** starts to operate as a stable application testnet which has the same version as the mainnet, so that the service providers of FURYnet can develop their apps on or interact with FURYhub without running a node or lcd instance.
 
 ## Public Endpoints
 
@@ -18,7 +18,7 @@ After IRIS Hub 1.0 upgrade of mainnet, **Nyancat Testnet** starts to operate as 
 
 ### Start node from genesis
 ::tip 
-You must use Irishub [v1.1.1](https://github.com/furynet/furyhub/releases/tag/v1.1.1)[ ](https://github.com/furynet/furyhub/releases/tag/v1.0.1) to initialize your node::
+You must use Furyhub [v1.1.1](https://github.com/furynet/furyhub/releases/tag/v1.1.1)[ ](https://github.com/furynet/furyhub/releases/tag/v1.0.1) to initialize your node::
 
 ```bash
 # init node

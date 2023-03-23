@@ -4,7 +4,7 @@ order: 7
 
 # State Sync
 
-If you want to quickly start the node and join IRIS Hub without historical data, you can consider using the `state_sync` feature. **Note that the data directory must be empty when starting the node.**
+If you want to quickly start the node and join FURY Hub without historical data, you can consider using the `state_sync` feature. **Note that the data directory must be empty when starting the node.**
 
 ## Procedure
 
@@ -37,4 +37,4 @@ fury start
 ## Others
 
 1. If any problem occurs during chain starting, you can execute `fury unsafe-reset-all` to reset the node and repeat the steps above.
-2. If you can't find solutions to the current issue, please contact us via [IRISnet Discord channel](https://discord.com/invite/bmhu9F9xbX) for help.
+2. If you can't find solutions to the current issue, please contact us via [FURYnet Discord channel](https://discord.com/invite/bmhu9F9xbX) for help.

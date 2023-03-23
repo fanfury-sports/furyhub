@@ -2,7 +2,7 @@
 
 ## Summary
 
-This module is mainly used to transfer coins between accounts, query account balances, and provide common offline transaction signing and broadcasting methods. In addition, the available units of tokens in the IRIShub system are defined using [coin-type](../concepts/coin-type.md).
+This module is mainly used to transfer coins between accounts, query account balances, and provide common offline transaction signing and broadcasting methods. In addition, the available units of tokens in the FURYhub system are defined using [coin-type](../concepts/coin-type.md).
 
 ## Usage Scenario
 
@@ -22,11 +22,11 @@ This module is mainly used to transfer coins between accounts, query account bal
     fury tx bank send [A] [B] [10fury] --fees=0.3fury --chain-id=furyhub
     ```
 
-    IRIShub supports multiple tokens in circulation, and in the future IRIShub will be able to include multiple tokens in one transaction.
+    FURYhub supports multiple tokens in circulation, and in the future FURYhub will be able to include multiple tokens in one transaction.
 
 3. Sign transactions generated offline
 
-    To improve account security, IRIShub supports offline signing of transactions to protect the account's private key. In any transaction, you can build an unsigned transaction using the flag --generate-only. Take transfer transaction as an example:
+    To improve account security, FURYhub supports offline signing of transactions to protect the account's private key. In any transaction, you can build an unsigned transaction using the flag --generate-only. Take transfer transaction as an example:
 
     ```bash
     fury tx bank send [from_key_or_address] [to_address] [amount]  --fees=0.3fury --generate-only
@@ -88,4 +88,4 @@ This module is mainly used to transfer coins between accounts, query account bal
     fury tx broadcast <file>
     ```
 
-    The transaction will be broadcast and executed in IRIShub.
+    The transaction will be broadcast and executed in FURYhub.

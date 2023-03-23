@@ -4,11 +4,11 @@ order: 1
 
 # Introduction
 
-`fury` is a command line client for the IRIShub network. IRIShub users can use `fury` to send transactions and query the blockchain data.
+`fury` is a command line client for the FURYhub network. FURYhub users can use `fury` to send transactions and query the blockchain data.
 
 ## Working Directory
 
-The default working directory for the `fury` is `$HOME/.fury`, which is mainly used to save configuration files and data. The IRIShub `key` data is saved in the working directory of `fury`. You can also specify the `fury`  working directory by `--home`.
+The default working directory for the `fury` is `$HOME/.fury`, which is mainly used to save configuration files and data. The FURYhub `key` data is saved in the working directory of `fury`. You can also specify the `fury`  working directory by `--home`.
 
 ## Connecting to a Full Node
 

@@ -2,7 +2,7 @@
 
 ## Summary
 
-IRIShub introduce two types of privileged system user controlled by foundations, the profiler and the trustee.
+FURYhub introduce two types of privileged system user controlled by foundations, the profiler and the trustee.
 
 * Profiler privileges
     1. Submit software upgrade/halt proposal by governance.

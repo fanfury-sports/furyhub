@@ -2,9 +2,9 @@
 order: 6
 ---
 
-# IRISnet Explorers
+# FURYnet Explorers
 
-These block explorers allow you to search, view and analyze IRIS Hub data—like blocks, transactions, validators, governance including params or proposals, etc.
+These block explorers allow you to search, view and analyze FURY Hub data—like blocks, transactions, validators, governance including params or proposals, etc.
 
 - [IOBScan](https://furyhub.iobscan.io/)
 - [Big-Dipper](https://fury.bigdipper.live/)

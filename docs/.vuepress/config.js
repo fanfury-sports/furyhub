@@ -40,8 +40,8 @@ module.exports = {
     locales: {
         "/": {
             lang: "en-US",
-            title: "IRISnet Documents",
-            description: "IRISnet Documents",
+            title: "FURYnet Documents",
+            description: "FURYnet Documents",
         }
     },
     themeConfig: {
@@ -55,7 +55,7 @@ module.exports = {
                 editLinkText: 'Help us improve this page!',
                 nav: [
                     {
-                        text: 'Back to IRISnet',
+                        text: 'Back to FURYnet',
                         link: 'https://www.furynet.org'
                     }
                 ],

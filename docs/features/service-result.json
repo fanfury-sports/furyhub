@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "fury-service-result",
-    "description": "IRIS Service Result Schema",
+    "description": "FURY Service Result Schema",
     "type": "object",
     "properties": {
         "code": {

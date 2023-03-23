@@ -1,6 +1,6 @@
 # Oracle
 
-Oracle module allows you to manage the feed on IRIS Hub
+Oracle module allows you to manage the feed on FURY Hub
 
 ## Available Commands
 
@@ -90,7 +90,7 @@ fury tx oracle pause test-feed --chain-id=furyhub --from=node0 --fees=0.3fury
 
 ## fury tx oracle edit
 
-This command is used to edit an existing feed on IRIS Hub.
+This command is used to edit an existing feed on FURY Hub.
 
 ```bash
 fury tx oracle edit [feed-name] [flags]

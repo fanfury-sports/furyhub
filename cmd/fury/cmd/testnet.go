@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 
 	evmtypes "github.com/evmos/ethermint/x/evm/types"
-	tokentypes "github.com/furynet/furymod/modules/token/types"
+	tokentypes "github.com/irisnet/irismod/modules/token/types"
 
 	"github.com/spf13/cobra"
 
@@ -43,9 +43,9 @@ import (
 
 	guardiantypes "github.com/furynet/furyhub/modules/guardian/types"
 	furytypes "github.com/furynet/furyhub/types"
-	randomtypes "github.com/furynet/furymod/modules/random/types"
-	servicetypes "github.com/furynet/furymod/modules/service/types"
-	tokentypesv1 "github.com/furynet/furymod/modules/token/types/v1"
+	randomtypes "github.com/irisnet/irismod/modules/random/types"
+	servicetypes "github.com/irisnet/irismod/modules/service/types"
+	tokentypesv1 "github.com/irisnet/irismod/modules/token/types/v1"
 )
 
 var (
@@ -57,7 +57,7 @@ var (
 	flagStartingIPAddress = "starting-ip-address"
 )
 
-const nativeIrisMinUnit = "ufury"
+const nativeFuryMinUnit = "ufury"
 
 var PowerReduction = sdk.NewIntFromUint64(1000000000000000000)
 
@@ -221,13 +221,13 @@ func InitTestnet(
 		accTokens := sdk.TokensFromConsensusPower(1000, sdk.DefaultPowerReduction)
 		accStakingTokens := sdk.TokensFromConsensusPower(500, sdk.DefaultPowerReduction)
 		accEvmTokens := sdk.TokensFromConsensusPower(5000, PowerReduction)
-		accIrisTokens := sdk.TokensFromConsensusPower(5000, sdk.DefaultPowerReduction)
+		accFuryTokens := sdk.TokensFromConsensusPower(5000, sdk.DefaultPowerReduction)
 
 		coins := sdk.Coins{
 			sdk.NewCoin(fmt.Sprintf("%stoken", nodeDirName), accTokens),
 			sdk.NewCoin(sdk.DefaultBondDenom, accStakingTokens),
 			sdk.NewCoin(furytypes.EvmToken.MinUnit, accEvmTokens),
-			sdk.NewCoin(nativeIrisMinUnit, accIrisTokens),
+			sdk.NewCoin(nativeFuryMinUnit, accFuryTokens),
 		}
 
 		genBalances = append(genBalances, banktypes.Balance{Address: addr.String(), Coins: coins.Sort()})

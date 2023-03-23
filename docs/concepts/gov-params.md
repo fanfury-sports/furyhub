@@ -1,7 +1,7 @@
 # Gov Parameters
 
-In IRIShub, there are some special parameters that can be modified through on-chain governance.
-All the IRIS holders may participate in the on-chain governance. If the community is not satisfied with certain modifiable parameters, it is available to submit a [parameter-change](../features/governance.md#usage-scenario-of-parameter-change) proposal, and the params will be changed online automatically when the proposal passes.
+In FURYhub, there are some special parameters that can be modified through on-chain governance.
+All the FURY holders may participate in the on-chain governance. If the community is not satisfied with certain modifiable parameters, it is available to submit a [parameter-change](../features/governance.md#usage-scenario-of-parameter-change) proposal, and the params will be changed online automatically when the proposal passes.
 
 ## Parameters in Auth
 

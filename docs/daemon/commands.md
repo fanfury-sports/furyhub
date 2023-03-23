@@ -6,7 +6,7 @@ order: 2
 
 ## Introduction
 
-IRIS Daemon Commands allow you to init, start, reset a node, or generate a genesis file, etc.
+FURY Daemon Commands allow you to init, start, reset a node, or generate a genesis file, etc.
 
 You can get familiar with these commands by creating a [Local Testnet](local-testnet.md).
 
@@ -27,7 +27,7 @@ fury <command>
 | [start](local-testnet.md#fury-start)                             | Run the full node                                                                                               |
 | [unsafe-reset-all](local-testnet.md#fury-unsafe-reset-all)       | Resets the blockchain database, removes address book files, and resets priv_validator.json to the genesis state |
 | [tendermint](local-testnet.md#fury-tendermint)                   | Tendermint subcommands                                                                                          |
-| [testnet](local-testnet.md#build-and-init)                       | Initialize files for a Irishub testnet                                                                          |
+| [testnet](local-testnet.md#build-and-init)                       | Initialize files for a Furyhub testnet                                                                          |
 | [reset](local-testnet.md#fury-reset)                             | Reset app state to the specified height                                                                         |
 | [export](export.md)                                              | Export state to JSON                                                                                            |
 | version                                                          | Show executable binary version                                                                                  |

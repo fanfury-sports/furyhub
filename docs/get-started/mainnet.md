@@ -43,7 +43,7 @@ You may see some connection errors, it does not matter, the P2P network is tryin
 
 Try to add some of the [Community Peers](https://github.com/furynet/mainnet/blob/master/config/community-peers.md) to `persistent_peers` in the config.toml
 
-If you want to quickly start the node and join IRIS Hub without historical data, you can consider using the [state_sync](./state-sync.md) function.
+If you want to quickly start the node and join FURY Hub without historical data, you can consider using the [state_sync](./state-sync.md) function.
 :::
 
 ### Quick Start via State Sync
@@ -64,7 +64,7 @@ trust_height = 17613000
 trust_hash = "990f1eaf06d456bc22891327e006d520cb407f8ad3bfee1edd43df0de1e1da1c"
 trust_period = "168h"  # 2/3 of unbonding time
 
-#Start Iris
+#Start Fury
 fury start --x-crisis-skip-assert-invariants
 ```
 
@@ -72,7 +72,7 @@ fury start --x-crisis-skip-assert-invariants
 
 ### Create a Wallet
 
-You can [create a new wallet](../cli-client/keys.md#create-a-new-key) or [import an existing one](../cli-client/keys.md#recover-an-existing-key-from-seed-phrase), then get some IRIS from the exchanges or anywhere else into the wallet you just created, .e.g.
+You can [create a new wallet](../cli-client/keys.md#create-a-new-key) or [import an existing one](../cli-client/keys.md#recover-an-existing-key-from-seed-phrase), then get some FURY from the exchanges or anywhere else into the wallet you just created, .e.g.
 
 ```bash
 # create a new wallet
@@ -133,6 +133,6 @@ Read more:
 
 ## Faucet
 
-Request IRISnet mainnet tokens from the Faucet powered by Stakely.
+Request FURYnet mainnet tokens from the Faucet powered by Stakely.
 
 For the usage, please refer to the guideline on the Faucet page: https://stakely.io/faucet/furynet-fury

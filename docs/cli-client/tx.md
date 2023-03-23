@@ -141,7 +141,7 @@ The `signed.json` should look like:
 
 Note the `signature` in the `signed.json` should no longer be empty after signing.
 
-Now it's ready to [broadcast the signed tx](#fury-tx-broadcast) to the IRIS Hub.
+Now it's ready to [broadcast the signed tx](#fury-tx-broadcast) to the FURY Hub.
 
 ## fury tx broadcast
 
@@ -235,19 +235,19 @@ Among the possible values of `message.action`:
 |              | cosmos-sdk/MsgBeginRedelegate             | redelegate           |
 |              | cosmos-sdk/MsgUndelegate                  | unbond               |
 | slashing     | cosmos-sdk/MsgUnjail                      | unjail               |
-| coinswap     | furymod/MsgSwapOrder                      | swap                 |
-|              | furymod/MsgAddLiquidity                   | add_liquidity        |
-|              | furymod/MsgRemoveLiquidity                | remove_liquidity     |
-| htlc         | furymod/MsgCreateHTLC                     | create_htlc          |
-|              | furymod/MsgClaimHTLC                      | claim_htlc           |
-|              | furymod/MsgRefundHTLC                     | refund_htlc          |
-| nft          | furymod/MsgIssueDenom                     | issue_denom          |
-|              | furymod/MsgMintNFT                        | mint_nft             |
-|              | furymod/MsgBurnNFT                        | burn_nft             |
-|              | furymod/MsgTransferNFT                    | transfer_nft         |
-|              | furymod/MsgEditNFT                        | edit_nft             |
-| record       | furymod/MsgCreateRecord                   | create_record        |
-| token        | furymod/MsgIssueToken                     | issue_token          |
-|              | furymod/MsgEditToken                      | edit_token           |
-|              | furymod/MsgTransferTokenOwner             | transfer_token_owner |
-|              | furymod/MsgMintToken                      | mint_token           |
+| coinswap     | irismod/MsgSwapOrder                      | swap                 |
+|              | irismod/MsgAddLiquidity                   | add_liquidity        |
+|              | irismod/MsgRemoveLiquidity                | remove_liquidity     |
+| htlc         | irismod/MsgCreateHTLC                     | create_htlc          |
+|              | irismod/MsgClaimHTLC                      | claim_htlc           |
+|              | irismod/MsgRefundHTLC                     | refund_htlc          |
+| nft          | irismod/MsgIssueDenom                     | issue_denom          |
+|              | irismod/MsgMintNFT                        | mint_nft             |
+|              | irismod/MsgBurnNFT                        | burn_nft             |
+|              | irismod/MsgTransferNFT                    | transfer_nft         |
+|              | irismod/MsgEditNFT                        | edit_nft             |
+| record       | irismod/MsgCreateRecord                   | create_record        |
+| token        | irismod/MsgIssueToken                     | issue_token          |
+|              | irismod/MsgEditToken                      | edit_token           |
+|              | irismod/MsgTransferTokenOwner             | transfer_token_owner |
+|              | irismod/MsgMintToken                      | mint_token           |

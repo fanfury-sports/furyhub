@@ -1,6 +1,6 @@
 # Token
 
-Token module allows you to manage assets on IRIS Hub
+Token module allows you to manage assets on FURY Hub
 
 ## Available Commands
 
@@ -29,7 +29,7 @@ fury tx token issue [flags]
 
 | Name, shorthand  | Type    | Required | Default       | Description                                                                                                                    |
 | ---------------- | ------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| --name           | string  | Yes      |               | Name of the newly issued token, limited to 32 unicode characters, e.g. "IRIS Network"                                          |
+| --name           | string  | Yes      |               | Name of the newly issued token, limited to 32 unicode characters, e.g. "FURY Network"                                          |
 | --symbol         | string  | Yes      |               | The symbol of the token, length between 3 and 8, alphanumeric characters beginning with alpha, case insensitive                |
 | --initial-supply | uint64  | Yes      |               | The initial supply of this token. The amount before boosting should not exceed 100 billion.                                    |
 | --max-supply     | uint64  |          | 1000000000000 | The hard cap of this token, total supply can not exceed max supply. The amount before boosting should not exceed 1000 billion. |
@@ -75,7 +75,7 @@ fury tx token edit [symbol] [flags]
 
 | Name         | Type   | Required | Default | Description                                       |
 | ------------ | ------ | -------- | ------- | ------------------------------------------------- |
-| --name       | string |          |         | The token name, e.g. IRIS Network                 |
+| --name       | string |          |         | The token name, e.g. FURY Network                 |
 | --max-supply | uint64 |          | 0       | The max supply of the token                       |
 | --mintable   | bool   |          | false   | Whether the token can be minted, default to false |
 

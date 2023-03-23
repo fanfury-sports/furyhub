@@ -4,7 +4,7 @@
 
 ## Summary
 
-IRIS Service (a.k.a. iService) is intended to bridge the gap between the blockchain world and the conventional application world.  It formalizes off-chain service definition and binding (provider registration), facilitates invocation and interaction with those services, and mediates service governance process (profiling and dispute resolution).
+FURY Service (a.k.a. iService) is intended to bridge the gap between the blockchain world and the conventional application world.  It formalizes off-chain service definition and binding (provider registration), facilitates invocation and interaction with those services, and mediates service governance process (profiling and dispute resolution).
 
 ## Service Definition
 

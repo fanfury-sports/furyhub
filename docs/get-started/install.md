@@ -6,7 +6,7 @@ order: 2
 ## Install `go`
 
 ::: tip
-**Go 1.15+** is required for building and installing the IRIShub software.
+**Go 1.15+** is required for building and installing the FURYhub software.
 :::
 
 Install `go` by following the [official docs](https://golang.org/doc/install).

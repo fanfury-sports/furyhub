@@ -11,14 +11,14 @@ import (
 
 	"github.com/furynet/furyhub/types"
 	furytypes "github.com/furynet/furyhub/types"
-	coinswaptypes "github.com/furynet/furymod/modules/coinswap/types"
-	htlctypes "github.com/furynet/furymod/modules/htlc/types"
-	mttypes "github.com/furynet/furymod/modules/mt/types"
-	nfttypes "github.com/furynet/furymod/modules/nft/types"
-	oracletypes "github.com/furynet/furymod/modules/oracle/types"
-	randomtypes "github.com/furynet/furymod/modules/random/types"
-	servicetypes "github.com/furynet/furymod/modules/service/types"
-	tokentypes "github.com/furynet/furymod/modules/token/types"
+	coinswaptypes "github.com/irisnet/irismod/modules/coinswap/types"
+	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
+	mttypes "github.com/irisnet/irismod/modules/mt/types"
+	nfttypes "github.com/irisnet/irismod/modules/nft/types"
+	oracletypes "github.com/irisnet/irismod/modules/oracle/types"
+	randomtypes "github.com/irisnet/irismod/modules/random/types"
+	servicetypes "github.com/irisnet/irismod/modules/service/types"
+	tokentypes "github.com/irisnet/irismod/modules/token/types"
 	"github.com/stretchr/testify/require"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -83,8 +83,8 @@ func TestFullAppSimulation(t *testing.T) {
 		require.NoError(t, os.RemoveAll(dir))
 	}()
 
-	app := NewIrisApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
-	require.Equal(t, "IrisApp", app.Name())
+	app := NewFuryApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
+	require.Equal(t, "FuryApp", app.Name())
 
 	// run randomized simulation
 	_, simParams, simErr := simulation.SimulateFromSeed(
@@ -121,8 +121,8 @@ func TestAppImportExport(t *testing.T) {
 		require.NoError(t, os.RemoveAll(dir))
 	}()
 
-	app := NewIrisApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
-	require.Equal(t, "IrisApp", app.Name())
+	app := NewFuryApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
+	require.Equal(t, "FuryApp", app.Name())
 
 	// Run randomized simulation
 	_, simParams, simErr := simulation.SimulateFromSeed(
@@ -161,8 +161,8 @@ func TestAppImportExport(t *testing.T) {
 		require.NoError(t, os.RemoveAll(newDir))
 	}()
 
-	newApp := NewIrisApp(log.NewNopLogger(), newDB, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
-	require.Equal(t, "IrisApp", newApp.Name())
+	newApp := NewFuryApp(log.NewNopLogger(), newDB, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
+	require.Equal(t, "FuryApp", newApp.Name())
 
 	var genesisState furytypes.GenesisState
 	err = json.Unmarshal(exported.AppState, &genesisState)
@@ -204,7 +204,7 @@ func TestAppImportExport(t *testing.T) {
 		{app.keys[ibchost.StoreKey], newApp.keys[ibchost.StoreKey], [][]byte{}},
 		{app.keys[ibctransfertypes.StoreKey], newApp.keys[ibctransfertypes.StoreKey], [][]byte{}},
 
-		// check furymod module
+		// check irismod module
 		{app.keys[tokentypes.StoreKey], newApp.keys[tokentypes.StoreKey], [][]byte{}},
 		{app.keys[oracletypes.StoreKey], newApp.keys[oracletypes.StoreKey], [][]byte{}},
 		//mt.Supply is InitSupply, can be not equal to TotalSupply
@@ -240,8 +240,8 @@ func TestAppSimulationAfterImport(t *testing.T) {
 		require.NoError(t, os.RemoveAll(dir))
 	}()
 
-	app := NewIrisApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
-	require.Equal(t, "IrisApp", app.Name())
+	app := NewFuryApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
+	require.Equal(t, "FuryApp", app.Name())
 
 	// Run randomized simulation
 	stopEarly, simParams, simErr := simulation.SimulateFromSeed(
@@ -285,8 +285,8 @@ func TestAppSimulationAfterImport(t *testing.T) {
 		require.NoError(t, os.RemoveAll(newDir))
 	}()
 
-	newApp := NewIrisApp(log.NewNopLogger(), newDB, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
-	require.Equal(t, "IrisApp", newApp.Name())
+	newApp := NewFuryApp(log.NewNopLogger(), newDB, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
+	require.Equal(t, "FuryApp", newApp.Name())
 
 	newApp.InitChain(abci.RequestInitChain{
 		AppStateBytes: exported.AppState,
@@ -336,7 +336,7 @@ func TestAppStateDeterminism(t *testing.T) {
 			}
 
 			db := dbm.NewMemDB()
-			app := NewIrisApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, interBlockCacheOpt())
+			app := NewFuryApp(logger, db, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, interBlockCacheOpt())
 
 			fmt.Printf(
 				"running non-determinism simulation; seed %d: %d/%d, attempt: %d/%d\n",

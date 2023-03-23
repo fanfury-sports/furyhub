@@ -83,37 +83,37 @@ import (
 	porttypes "github.com/cosmos/ibc-go/v5/modules/core/05-port/types"
 	ibchost "github.com/cosmos/ibc-go/v5/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v5/modules/core/keeper"
-	"github.com/furynet/furymod/modules/token"
+	"github.com/irisnet/irismod/modules/token"
 
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
-	"github.com/furynet/furymod/modules/coinswap"
-	coinswapkeeper "github.com/furynet/furymod/modules/coinswap/keeper"
-	coinswaptypes "github.com/furynet/furymod/modules/coinswap/types"
-	"github.com/furynet/furymod/modules/htlc"
-	htlckeeper "github.com/furynet/furymod/modules/htlc/keeper"
-	htlctypes "github.com/furynet/furymod/modules/htlc/types"
-	"github.com/furynet/furymod/modules/mt"
-	mtkeeper "github.com/furynet/furymod/modules/mt/keeper"
-	mttypes "github.com/furynet/furymod/modules/mt/types"
-	nftkeeper "github.com/furynet/furymod/modules/nft/keeper"
-	nftmodule "github.com/furynet/furymod/modules/nft/module"
-	nfttypes "github.com/furynet/furymod/modules/nft/types"
-	"github.com/furynet/furymod/modules/oracle"
-	oraclekeeper "github.com/furynet/furymod/modules/oracle/keeper"
-	oracletypes "github.com/furynet/furymod/modules/oracle/types"
-	"github.com/furynet/furymod/modules/random"
-	randomkeeper "github.com/furynet/furymod/modules/random/keeper"
-	randomtypes "github.com/furynet/furymod/modules/random/types"
-	"github.com/furynet/furymod/modules/record"
-	recordkeeper "github.com/furynet/furymod/modules/record/keeper"
-	recordtypes "github.com/furynet/furymod/modules/record/types"
-	"github.com/furynet/furymod/modules/service"
-	servicekeeper "github.com/furynet/furymod/modules/service/keeper"
-	servicetypes "github.com/furynet/furymod/modules/service/types"
+	"github.com/irisnet/irismod/modules/coinswap"
+	coinswapkeeper "github.com/irisnet/irismod/modules/coinswap/keeper"
+	coinswaptypes "github.com/irisnet/irismod/modules/coinswap/types"
+	"github.com/irisnet/irismod/modules/htlc"
+	htlckeeper "github.com/irisnet/irismod/modules/htlc/keeper"
+	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
+	"github.com/irisnet/irismod/modules/mt"
+	mtkeeper "github.com/irisnet/irismod/modules/mt/keeper"
+	mttypes "github.com/irisnet/irismod/modules/mt/types"
+	nftkeeper "github.com/irisnet/irismod/modules/nft/keeper"
+	nftmodule "github.com/irisnet/irismod/modules/nft/module"
+	nfttypes "github.com/irisnet/irismod/modules/nft/types"
+	"github.com/irisnet/irismod/modules/oracle"
+	oraclekeeper "github.com/irisnet/irismod/modules/oracle/keeper"
+	oracletypes "github.com/irisnet/irismod/modules/oracle/types"
+	"github.com/irisnet/irismod/modules/random"
+	randomkeeper "github.com/irisnet/irismod/modules/random/keeper"
+	randomtypes "github.com/irisnet/irismod/modules/random/types"
+	"github.com/irisnet/irismod/modules/record"
+	recordkeeper "github.com/irisnet/irismod/modules/record/keeper"
+	recordtypes "github.com/irisnet/irismod/modules/record/types"
+	"github.com/irisnet/irismod/modules/service"
+	servicekeeper "github.com/irisnet/irismod/modules/service/keeper"
+	servicetypes "github.com/irisnet/irismod/modules/service/types"
 
-	tokenkeeper "github.com/furynet/furymod/modules/token/keeper"
-	tokentypes "github.com/furynet/furymod/modules/token/types"
-	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
+	tokenkeeper "github.com/irisnet/irismod/modules/token/keeper"
+	tokentypes "github.com/irisnet/irismod/modules/token/types"
+	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
 
 	"github.com/furynet/furyhub/address"
 	"github.com/furynet/furyhub/lite"
@@ -124,9 +124,9 @@ import (
 	mintkeeper "github.com/furynet/furyhub/modules/mint/keeper"
 	minttypes "github.com/furynet/furyhub/modules/mint/types"
 
-	"github.com/furynet/furymod/modules/farm"
-	farmkeeper "github.com/furynet/furymod/modules/farm/keeper"
-	farmtypes "github.com/furynet/furymod/modules/farm/types"
+	"github.com/irisnet/irismod/modules/farm"
+	farmkeeper "github.com/irisnet/irismod/modules/farm/keeper"
+	farmtypes "github.com/irisnet/irismod/modules/farm/types"
 
 	tibcmttransfer "github.com/bianjieai/tibc-go/modules/tibc/apps/mt_transfer"
 	tibcmttransferkeeper "github.com/bianjieai/tibc-go/modules/tibc/apps/mt_transfer/keeper"
@@ -307,7 +307,7 @@ func init() {
 
 	nativeToken = tokenv1.Token{
 		Symbol:        "fury",
-		Name:          "Irishub staking token",
+		Name:          "Furyhub staking token",
 		Scale:         6,
 		MinUnit:       "ufury",
 		InitialSupply: 2000000000,
@@ -344,7 +344,7 @@ func DefaultCoinDenomRegex() string {
 	return reDnmString
 }
 
-// NewSimApp returns a reference to an initialized IrisApp.
+// NewSimApp returns a reference to an initialized FuryApp.
 func NewSimApp(
 	logger log.Logger,
 	db dbm.DB,
@@ -984,7 +984,7 @@ func (app *SimApp) LegacyAmino() *codec.LegacyAmino {
 	return app.legacyAmino
 }
 
-// AppCodec returns IrisApp's app codec.
+// AppCodec returns FuryApp's app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -992,7 +992,7 @@ func (app *SimApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns IrisApp's InterfaceRegistry
+// InterfaceRegistry returns FuryApp's InterfaceRegistry
 func (app *SimApp) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }

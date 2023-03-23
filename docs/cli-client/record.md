@@ -1,6 +1,6 @@
 # Record
 
-Record module allows you to manage record on IRIS Hub
+Record module allows you to manage record on FURY Hub
 
 ## Available Commands
 

@@ -26,7 +26,7 @@ cargo install tmkms --features=yubihsm --version=0.10.0-beta2
 
 ## Initialization
 
-Initialize configuration files for IRIShub
+Initialize configuration files for FURYhub
 
 ```bash
 tmkms init -n furyhub /path/to/kms/home
@@ -64,7 +64,7 @@ tmkms start -c /path/to/kms/home/tmkms.toml
 
 Detailed information on how to setup a KMS with YubiHSM2 can be found [here](https://github.com/iqlusioninc/tmkms/blob/master/README.yubihsm.md).
 
-If you want to import an existing IRIShub private_key:
+If you want to import an existing FURYhub private_key:
 
 ```bash
 tmkms yubihsm keys import <fury_home>/config/priv_validator.json -i <id> -t json -c /path/to/kms/home/tmkms.toml

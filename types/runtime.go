@@ -11,12 +11,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/furynet/furyhub/address"
-	tokentypes "github.com/furynet/furymod/modules/token/types"
-	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
+	tokentypes "github.com/irisnet/irismod/modules/token/types"
+	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
 )
 
 const (
-	AppName = "IrisApp"
+	AppName = "FuryApp"
 )
 
 var (
@@ -36,7 +36,7 @@ func init() {
 
 	NativeToken = tokenv1.Token{
 		Symbol:        "fury",
-		Name:          "Irishub staking token",
+		Name:          "Furyhub staking token",
 		Scale:         6,
 		MinUnit:       "ufury",
 		InitialSupply: 2000000000,
@@ -48,7 +48,7 @@ func init() {
 	// TODO
 	EvmToken = tokenv1.Token{
 		Symbol:        "eth",
-		Name:          "Irishub evm token",
+		Name:          "Furyhub evm token",
 		Scale:         18,
 		MinUnit:       "wei",
 		InitialSupply: 0,

@@ -2,9 +2,9 @@
 order: 5
 ---
 
-# IRIShub Client SDKs
+# FURYhub Client SDKs
 
-IRIShub SDK is a software development kit based on the Endpoint provided by IRIShub, which provides great convenience for users to quickly develop applications based on the IRIShub chain.
+FURYhub SDK is a software development kit based on the Endpoint provided by FURYhub, which provides great convenience for users to quickly develop applications based on the FURYhub chain.
 
 Available in three languages:
 
@@ -14,7 +14,7 @@ Available in three languages:
 
 ## Design Goals and Concepts
 
-The SDK mainly implements the encapsulation of the functions of IRIShub modules, including: auth, bank, gov, htlc, keys, nft, oracle, random, record, service, staking, token. So that users can quickly realize the development of the following functions:
+The SDK mainly implements the encapsulation of the functions of FURYhub modules, including: auth, bank, gov, htlc, keys, nft, oracle, random, record, service, staking, token. So that users can quickly realize the development of the following functions:
 
 - Generating, Signing and Broadcasting Transactions
 - Private Key Management
@@ -22,7 +22,7 @@ The SDK mainly implements the encapsulation of the functions of IRIShub modules,
 
 ## SDK Docs
 
-The document link of IRIShub SDKs is as follows:
+The document link of FURYhub SDKs is as follows:
 
 - [Go SDK docs](https://github.com/furynet/furyhub-sdk-go/blob/master/README.md)
 - [JavaScript SDK docs](https://github.com/furynet/furyhub-sdk-js/blob/master/README.md)

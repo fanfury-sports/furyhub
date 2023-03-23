@@ -33,23 +33,23 @@ import (
 	icatypes "github.com/cosmos/ibc-go/v5/modules/apps/27-interchain-accounts/types"
 	ibchost "github.com/cosmos/ibc-go/v5/modules/core/24-host"
 
-	coinswaptypes "github.com/furynet/furymod/modules/coinswap/types"
-	farmtypes "github.com/furynet/furymod/modules/farm/types"
-	"github.com/furynet/furymod/modules/htlc"
-	htlctypes "github.com/furynet/furymod/modules/htlc/types"
-	mttypes "github.com/furynet/furymod/modules/mt/types"
-	nftmodule "github.com/furynet/furymod/modules/nft/module"
-	nfttypes "github.com/furynet/furymod/modules/nft/types"
-	"github.com/furynet/furymod/modules/oracle"
-	oracletypes "github.com/furynet/furymod/modules/oracle/types"
-	"github.com/furynet/furymod/modules/random"
-	randomtypes "github.com/furynet/furymod/modules/random/types"
-	"github.com/furynet/furymod/modules/record"
-	recordtypes "github.com/furynet/furymod/modules/record/types"
-	"github.com/furynet/furymod/modules/service"
-	servicetypes "github.com/furynet/furymod/modules/service/types"
-	"github.com/furynet/furymod/modules/token"
-	tokentypes "github.com/furynet/furymod/modules/token/types"
+	coinswaptypes "github.com/irisnet/irismod/modules/coinswap/types"
+	farmtypes "github.com/irisnet/irismod/modules/farm/types"
+	"github.com/irisnet/irismod/modules/htlc"
+	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
+	mttypes "github.com/irisnet/irismod/modules/mt/types"
+	nftmodule "github.com/irisnet/irismod/modules/nft/module"
+	nfttypes "github.com/irisnet/irismod/modules/nft/types"
+	"github.com/irisnet/irismod/modules/oracle"
+	oracletypes "github.com/irisnet/irismod/modules/oracle/types"
+	"github.com/irisnet/irismod/modules/random"
+	randomtypes "github.com/irisnet/irismod/modules/random/types"
+	"github.com/irisnet/irismod/modules/record"
+	recordtypes "github.com/irisnet/irismod/modules/record/types"
+	"github.com/irisnet/irismod/modules/service"
+	servicetypes "github.com/irisnet/irismod/modules/service/types"
+	"github.com/irisnet/irismod/modules/token"
+	tokentypes "github.com/irisnet/irismod/modules/token/types"
 
 	tibcmttypes "github.com/bianjieai/tibc-go/modules/tibc/apps/mt_transfer/types"
 	tibcnfttypes "github.com/bianjieai/tibc-go/modules/tibc/apps/nft_transfer/types"
@@ -67,7 +67,7 @@ import (
 )
 
 // RegisterUpgradePlan register a handler of upgrade plan
-func (app *IrisApp) RegisterUpgradePlan(cfg module.Configurator) {
+func (app *FuryApp) RegisterUpgradePlan(cfg module.Configurator) {
 	app.RegisterUpgradeHandler(
 		"v1.1", &store.StoreUpgrades{},
 		func(ctx sdk.Context, plan sdkupgrade.Plan, fromVM module.VersionMap) (module.VersionMap, error) {

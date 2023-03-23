@@ -1,6 +1,6 @@
 # Random
 
-Rand module allows you to post a random number request to the IRIS Hub and query the random numbers or the pending random number requests.
+Rand module allows you to post a random number request to the FURY Hub and query the random numbers or the pending random number requests.
 
 ## Available Commands
 
@@ -28,7 +28,7 @@ fury tx random request [flags]
 
 ### Request a random number
 
-Post a random number request to the IRIS Hub, the random number will be generated after `--block-interval` blocks.
+Post a random number request to the FURY Hub, the random number will be generated after `--block-interval` blocks.
 
 ```bash
 # without oracle

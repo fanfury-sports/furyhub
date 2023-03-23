@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "fury-service-pricing",
-    "description": "IRIS Service Pricing Schema",
+    "description": "FURY Service Pricing Schema",
     "type": "object",
     "definitions": {
         "discount": {

@@ -10,8 +10,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 
-	htlckeeper "github.com/furynet/furymod/modules/htlc/keeper"
-	htlctypes "github.com/furynet/furymod/modules/htlc/types"
+	htlckeeper "github.com/irisnet/irismod/modules/htlc/keeper"
+	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
 )
 
 func Migrate(ctx sdk.Context, cdc codec.Codec, k htlckeeper.Keeper, bk bankkeeper.Keeper, key *storetypes.KVStoreKey) error {
