@@ -4,7 +4,7 @@ order: 2
 
 # Legacy Amino JSON REST
 
-The irishub versions v1.0.0 (depends on Cosmos-SDK v0.41) and earlier provided REST endpoints to query the state and broadcast transactions. These endpoints are kept in irishub v1.0, but they are marked as deprecated, and will be removed after a few versions therefore call these endpoints legacy REST endpoints.
+The furyhub versions v1.0.0 (depends on Cosmos-SDK v0.41) and earlier provided REST endpoints to query the state and broadcast transactions. These endpoints are kept in furyhub v1.0, but they are marked as deprecated, and will be removed after a few versions therefore call these endpoints legacy REST endpoints.
 
 Some important information concerning all legacy REST endpoints:
 
@@ -13,11 +13,11 @@ Some important information concerning all legacy REST endpoints:
 
 ## API Port, Activation and Configuration
 
-All routes are configured under the following fields in `~/.iris/config/app.toml`:
+All routes are configured under the following fields in `~/.fury/config/app.toml`:
 
 - `api.enable = true|false` field defines if the REST server should be enabled. Defaults to `true`.
 - `api.address = {string}` field defines the address (really, the port, since the host should be kept at `0.0.0.0`) the server should bind to. Defaults to `tcp://0.0.0.0:1317`.
-- some additional API configuration options are defined in `~/.iris/config/app.toml`, along with comments, please refer to that file directly.
+- some additional API configuration options are defined in `~/.fury/config/app.toml`, along with comments, please refer to that file directly.
 
 ### Legacy REST API Routes
 
@@ -308,7 +308,7 @@ For application developers, Legacy REST API routes needs to be wired up to the R
 
 ## Generating and Signing Transactions (Fully Backward Compatible)
 
-The same code as integrating with irishub-v0.16.3 mainnet. The transaction structure is as follows:
+The same code as integrating with furyhub-v0.16.3 mainnet. The transaction structure is as follows:
 
 ```json
 {
@@ -322,7 +322,7 @@ The same code as integrating with irishub-v0.16.3 mainnet. The transaction struc
                     "to_address": "iaa1q6t5439f0rkvkzl38m0f43e0kpv3mx7x2shlq8",
                     "amount": [
                         {
-                            "denom": "uiris",
+                            "denom": "ufury",
                             "amount": "1000000"
                         }
                     ]
@@ -332,14 +332,14 @@ The same code as integrating with irishub-v0.16.3 mainnet. The transaction struc
         "fee": {
             "amount": [
                 {
-                    "denom": "uiris",
+                    "denom": "ufury",
                     "amount": "30000"
                 }
             ],
             "gas": "200000"
         },
         "signatures": null,
-        "memo": "Sent via irishub client"
+        "memo": "Sent via furyhub client"
     }
 }
 ```
@@ -349,17 +349,17 @@ Where the IRIShub address prefix uses `iaa` instead, which affects the fields:
 - value.msg.value.from_adress
 - value.msg.value.to_address
 
-Denom uses `uiris` instead (1iris = 10<sup>6</sup>uiris), which affects fields:
+Denom uses `ufury` instead (1fury = 10<sup>6</sup>ufury), which affects fields:
 
 - value.msg.value.amount.denom
 - value.fee.amount.denom
 
 ## Broadcasting a transaction (Fully Backward Compatible)
 
-The same code as integrating with irishub mainnet, call `POST` `/txs` to send a transaction, as the example below:
+The same code as integrating with furyhub mainnet, call `POST` `/txs` to send a transaction, as the example below:
 
 ```bash
-curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"tx\": {\"msg\":[{\"type\":\"cosmos-sdk/MsgSend\",\"value\":{\"from_address\":\"iaa1rkgdpj6fyyyu7pnhmc3v7gw9uls4mnajvzdwkt\",\"to_address\":\"iaa1q6t5439f0rkvkzl38m0f43e0kpv3mx7x2shlq8\",\"amount\":[{\"denom\":\"uiris\",\"amount\":\"1000000\"}]}}],\"fee\":{\"amount\":[{\"denom\":\"uiris\",\"amount\":\"30000\"}],\"gas\":\"200000\"},\"signatures\":[{\"pub_key\":{\"type\":\"tendermint/PubKeySecp256k1\",\"value\":\"AxGagdsRTKni/h1+vCFzTpNltwoiU7SwIR2dg6Jl5a//\"},\"signature\":\"Pu8yiRVO8oB2YDDHyB047dXNArbVImasmKBrm8Kr+6B08y8QQ7YG1eVgHi5OIYYclccCf3Ju/BQ78qsMWMniNQ==\"}],\"memo\":\"Sent via irishub client\"}, \"mode\": \"block\"}"
+curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"tx\": {\"msg\":[{\"type\":\"cosmos-sdk/MsgSend\",\"value\":{\"from_address\":\"iaa1rkgdpj6fyyyu7pnhmc3v7gw9uls4mnajvzdwkt\",\"to_address\":\"iaa1q6t5439f0rkvkzl38m0f43e0kpv3mx7x2shlq8\",\"amount\":[{\"denom\":\"ufury\",\"amount\":\"1000000\"}]}}],\"fee\":{\"amount\":[{\"denom\":\"ufury\",\"amount\":\"30000\"}],\"gas\":\"200000\"},\"signatures\":[{\"pub_key\":{\"type\":\"tendermint/PubKeySecp256k1\",\"value\":\"AxGagdsRTKni/h1+vCFzTpNltwoiU7SwIR2dg6Jl5a//\"},\"signature\":\"Pu8yiRVO8oB2YDDHyB047dXNArbVImasmKBrm8Kr+6B08y8QQ7YG1eVgHi5OIYYclccCf3Ju/BQ78qsMWMniNQ==\"}],\"memo\":\"Sent via furyhub client\"}, \"mode\": \"block\"}"
 ```
 
 ## Breaking Changes in Querying Transactions
@@ -380,7 +380,7 @@ curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Conte
       "height": "5",
       "txhash": "E663768B616B1ACD2912E47C36FEBC7DB0E0974D6DB3823D4C656E0EAB8C679D",
       "data": "0A060A0473656E64",
-      "raw_log": "[{\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"iaa18awn3k70u05tlcul8w2qnl64g002uj4kjn93rn\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"iaa1w976a5jrhsj06dqmrh2x9qxzel74qtcmapklxc\"},{\"key\":\"sender\",\"value\":\"iaa18awn3k70u05tlcul8w2qnl64g002uj4kjn93rn\"},{\"key\":\"amount\",\"value\":\"1000000uiris\"}]}]}]",
+      "raw_log": "[{\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"iaa18awn3k70u05tlcul8w2qnl64g002uj4kjn93rn\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"iaa1w976a5jrhsj06dqmrh2x9qxzel74qtcmapklxc\"},{\"key\":\"sender\",\"value\":\"iaa18awn3k70u05tlcul8w2qnl64g002uj4kjn93rn\"},{\"key\":\"amount\",\"value\":\"1000000ufury\"}]}]}]",
       "logs": [
           {
               "events": [
@@ -414,7 +414,7 @@ curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Conte
                           },
                           {
                               "key": "amount",
-                              "value": "1000000uiris"
+                              "value": "1000000ufury"
                           }
                       ]
                   }
@@ -434,7 +434,7 @@ curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Conte
                           "to_address": "iaa1w976a5jrhsj06dqmrh2x9qxzel74qtcmapklxc",
                           "amount": [
                               {
-                                  "denom": "uiris",
+                                  "denom": "ufury",
                                   "amount": "1000000"
                               }
                           ]
@@ -444,7 +444,7 @@ curl -X POST "http://localhost:1317/txs" -H "accept: application/json" -H "Conte
               "fee": {
                   "amount": [
                       {
-                          "denom": "uiris",
+                          "denom": "ufury",
                           "amount": "30000"
                       }
                   ],

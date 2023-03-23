@@ -6,16 +6,16 @@ Rand module allows you to post a random number request to the IRIS Hub and query
 
 | Name                                | Description                                                      |
 | ----------------------------------- | ---------------------------------------------------------------- |
-| [request](#iris-tx-random-request)  | Request a random number with an optional block interval          |
-| [random](#iris-query-random-random) | Query the generated random number by the request id              |
-| [queue](#iris-query-random-queue)   | Query the pending random number requests with an optional height |
+| [request](#fury-tx-random-request)  | Request a random number with an optional block interval          |
+| [random](#fury-query-random-random) | Query the generated random number by the request id              |
+| [queue](#fury-query-random-queue)   | Query the pending random number requests with an optional height |
 
-## iris tx random request
+## fury tx random request
 
 Request a random number.
 
 ```bash
-iris tx random request [flags]
+fury tx random request [flags]
 ```
 
 **Flags:**
@@ -32,30 +32,30 @@ Post a random number request to the IRIS Hub, the random number will be generate
 
 ```bash
 # without oracle
-iris tx random request --block-interval=100 --from=<key-name> --chain-id=irishub --fees=0.3iris
+fury tx random request --block-interval=100 --from=<key-name> --chain-id=furyhub --fees=0.3fury
 
 # with oracle
-iris tx random request --block-interval=100 --oracle=true --service-fee-cap=1iris --from=<key-name> --chain-id=irishub --fees=0.3iris
+fury tx random request --block-interval=100 --oracle=true --service-fee-cap=1fury --from=<key-name> --chain-id=furyhub --fees=0.3fury
 ```
 
 :::tip
-You will get a unique request id if the tx is committed, which can be used to query the status of the request. You can also [query the tx detail](./tx.md#iris-query-tx) to get the request id.
+You will get a unique request id if the tx is committed, which can be used to query the status of the request. You can also [query the tx detail](./tx.md#fury-query-tx) to get the request id.
 :::
 
-## iris query random random
+## fury query random random
 
 Query the generated random number by the request id.
 
 ```bash
-iris query random random <request-id> [flags]
+fury query random random <request-id> [flags]
 ```
 
-## iris query random queue
+## fury query random queue
 
 Query the pending random number requests with an optional block height.
 
 ```bash
-iris query random queue <gen-height> [flags]
+fury query random queue <gen-height> [flags]
 ```
 
 ### Query random number request queue
@@ -63,5 +63,5 @@ iris query random queue <gen-height> [flags]
 Query the pending random number requests with an optional block height at which random numbers will be generated or request service.
 
 ```bash
-iris query random queue 100000
+fury query random queue 100000
 ```

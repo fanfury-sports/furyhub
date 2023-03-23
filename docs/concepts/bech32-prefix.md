@@ -36,11 +36,11 @@ This means you have created a new address `iaa18ekc4dswwrh2a6lfyev4tr25h5y76jkpc
 
 ## Validator Key Example
 
-Validator Key, aka. [Tendermint Key](validator-faq.md#tendermint-key). A Tendermint Consensus Public key is generated when the node is created with  `iris init`.
+Validator Key, aka. [Tendermint Key](validator-faq.md#tendermint-key). A Tendermint Consensus Public key is generated when the node is created with  `fury init`.
 You can get this value with
 
 ```bash
-iris tendermint show-validator --home=<iris-home>
+fury tendermint show-validator --home=<fury-home>
 ```
 
 Example Output:

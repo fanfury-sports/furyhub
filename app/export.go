@@ -13,10 +13,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/irisnet/irismod/modules/htlc"
-	"github.com/irisnet/irismod/modules/oracle"
-	"github.com/irisnet/irismod/modules/random"
-	"github.com/irisnet/irismod/modules/service"
+	"github.com/furynet/furymod/modules/htlc"
+	"github.com/furynet/furymod/modules/oracle"
+	"github.com/furynet/furymod/modules/random"
+	"github.com/furynet/furymod/modules/service"
 )
 
 // ExportAppStateAndValidators exports the state of the application for a genesis file.

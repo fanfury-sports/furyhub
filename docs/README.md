@@ -1,6 +1,6 @@
 # Welcome to the IRISnet Documents
 
-![irisnet](./pics/iris.jpg)
+![furynet](./pics/fury.jpg)
 
 ## About IRISnet
 

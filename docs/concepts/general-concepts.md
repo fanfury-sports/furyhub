@@ -12,7 +12,7 @@ A full-node is a program that fully validates transactions and blocks of a block
 
 ### Validator Node
 
-The [IRIS Hub](../get-started/intro.md#iris-hub) is based on [Cosmos SDK](https://cosmos.network/docs/intro/) and [Tendermint](https://tendermint.com/docs/introduction/what-is-tendermint.html), which relies on a set of validators to secure the network. The role of validators is to run a full-node and participate in consensus by broadcasting votes which contain cryptographic signatures signed by their private keys. Validators commit new blocks to the blockchain and receive revenue in exchange for their work. They must also participate in governance by voting on proposals. Validators are weighted according to their total stake.
+The [IRIS Hub](../get-started/intro.md#fury-hub) is based on [Cosmos SDK](https://cosmos.network/docs/intro/) and [Tendermint](https://tendermint.com/docs/introduction/what-is-tendermint.html), which relies on a set of validators to secure the network. The role of validators is to run a full-node and participate in consensus by broadcasting votes which contain cryptographic signatures signed by their private keys. Validators commit new blocks to the blockchain and receive revenue in exchange for their work. They must also participate in governance by voting on proposals. Validators are weighted according to their total stake.
 
 ### Validator Candidate Node
 
@@ -73,13 +73,13 @@ The following formulas are based on the current [IRIShub Mainnet Params](gov-par
 
 #### Annual Rewards (ignore proposer rewards and fees)
 
-- **AnnualInflation =** `Base * InflationRate` (aka 2 billion * 4% = 80 million iris)
+- **AnnualInflation =** `Base * InflationRate` (aka 2 billion * 4% = 80 million fury)
 - **ValidatorRewards =** `(AnnualInflation / BondedTokens) * (1 - CommunityTax) * (ValidatorSelfDelegation +  DelegatorsDelegation * ValidatorCommissionRate)`
 - **DelegatorRewards =** `(AnnualInflation / BondedTokens) * (1 - CommunityTax) * DelegatorSelfDelegation * (1 - ValidatorCommissionRate)`
 
 #### Block Rewards
 
-- **BlockInflation =** `AnnualInflation / (365*24*60*12)` (aka 12.68 iris)
+- **BlockInflation =** `AnnualInflation / (365*24*60*12)` (aka 12.68 fury)
 - **ProposerExtraRewards =** `(BaseProposerReward + BonusProposerReward * PrecommitPower/TotalVotingPower) * (BlockInflation + BlockCollectedFees)`
 - **BlockRewards =** `(BlockInflation + BlockCollectedFees) * (1 - CommunityTax) - ProposerExtraRewards`
 - **ValidatorTotalRewards =**

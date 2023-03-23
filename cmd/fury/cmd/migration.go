@@ -21,9 +21,9 @@ import (
 	etherminttypes "github.com/evmos/ethermint/x/evm/types"
 	feemarkettypes "github.com/evmos/ethermint/x/feemarket/types"
 
-	"github.com/irisnet/irishub/types"
-	tokentypes "github.com/irisnet/irismod/modules/token/types"
-	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
+	"github.com/furynet/furyhub/types"
+	tokentypes "github.com/furynet/furymod/modules/token/types"
+	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
 )
 
 func migrateCmd(appCodec codec.Codec) *cobra.Command {

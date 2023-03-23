@@ -9,16 +9,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/irisnet/irishub/types"
-	iristypes "github.com/irisnet/irishub/types"
-	coinswaptypes "github.com/irisnet/irismod/modules/coinswap/types"
-	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
-	mttypes "github.com/irisnet/irismod/modules/mt/types"
-	nfttypes "github.com/irisnet/irismod/modules/nft/types"
-	oracletypes "github.com/irisnet/irismod/modules/oracle/types"
-	randomtypes "github.com/irisnet/irismod/modules/random/types"
-	servicetypes "github.com/irisnet/irismod/modules/service/types"
-	tokentypes "github.com/irisnet/irismod/modules/token/types"
+	"github.com/furynet/furyhub/types"
+	furytypes "github.com/furynet/furyhub/types"
+	coinswaptypes "github.com/furynet/furymod/modules/coinswap/types"
+	htlctypes "github.com/furynet/furymod/modules/htlc/types"
+	mttypes "github.com/furynet/furymod/modules/mt/types"
+	nfttypes "github.com/furynet/furymod/modules/nft/types"
+	oracletypes "github.com/furynet/furymod/modules/oracle/types"
+	randomtypes "github.com/furynet/furymod/modules/random/types"
+	servicetypes "github.com/furynet/furymod/modules/service/types"
+	tokentypes "github.com/furynet/furymod/modules/token/types"
 	"github.com/stretchr/testify/require"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -164,7 +164,7 @@ func TestAppImportExport(t *testing.T) {
 	newApp := NewIrisApp(log.NewNopLogger(), newDB, nil, true, map[int64]bool{}, types.DefaultNodeHome, simapp.FlagPeriodValue, MakeEncodingConfig(), EmptyAppOptions{}, fauxMerkleModeOpt)
 	require.Equal(t, "IrisApp", newApp.Name())
 
-	var genesisState iristypes.GenesisState
+	var genesisState furytypes.GenesisState
 	err = json.Unmarshal(exported.AppState, &genesisState)
 	require.NoError(t, err)
 
@@ -204,7 +204,7 @@ func TestAppImportExport(t *testing.T) {
 		{app.keys[ibchost.StoreKey], newApp.keys[ibchost.StoreKey], [][]byte{}},
 		{app.keys[ibctransfertypes.StoreKey], newApp.keys[ibctransfertypes.StoreKey], [][]byte{}},
 
-		// check irismod module
+		// check furymod module
 		{app.keys[tokentypes.StoreKey], newApp.keys[tokentypes.StoreKey], [][]byte{}},
 		{app.keys[oracletypes.StoreKey], newApp.keys[oracletypes.StoreKey], [][]byte{}},
 		//mt.Supply is InitSupply, can be not equal to TotalSupply

@@ -93,37 +93,37 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v5/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v5/modules/core/keeper"
 
-	"github.com/irisnet/irismod/modules/coinswap"
-	coinswapkeeper "github.com/irisnet/irismod/modules/coinswap/keeper"
-	coinswaptypes "github.com/irisnet/irismod/modules/coinswap/types"
-	"github.com/irisnet/irismod/modules/farm"
-	farmkeeper "github.com/irisnet/irismod/modules/farm/keeper"
-	farmtypes "github.com/irisnet/irismod/modules/farm/types"
-	"github.com/irisnet/irismod/modules/htlc"
-	htlckeeper "github.com/irisnet/irismod/modules/htlc/keeper"
-	htlctypes "github.com/irisnet/irismod/modules/htlc/types"
-	"github.com/irisnet/irismod/modules/mt"
-	mtkeeper "github.com/irisnet/irismod/modules/mt/keeper"
-	mttypes "github.com/irisnet/irismod/modules/mt/types"
-	nftkeeper "github.com/irisnet/irismod/modules/nft/keeper"
-	nftmodule "github.com/irisnet/irismod/modules/nft/module"
-	nfttypes "github.com/irisnet/irismod/modules/nft/types"
-	"github.com/irisnet/irismod/modules/oracle"
-	oraclekeeper "github.com/irisnet/irismod/modules/oracle/keeper"
-	oracletypes "github.com/irisnet/irismod/modules/oracle/types"
-	"github.com/irisnet/irismod/modules/random"
-	randomkeeper "github.com/irisnet/irismod/modules/random/keeper"
-	randomtypes "github.com/irisnet/irismod/modules/random/types"
-	"github.com/irisnet/irismod/modules/record"
-	recordkeeper "github.com/irisnet/irismod/modules/record/keeper"
-	recordtypes "github.com/irisnet/irismod/modules/record/types"
-	"github.com/irisnet/irismod/modules/service"
-	servicekeeper "github.com/irisnet/irismod/modules/service/keeper"
-	servicetypes "github.com/irisnet/irismod/modules/service/types"
-	"github.com/irisnet/irismod/modules/token"
-	tokenkeeper "github.com/irisnet/irismod/modules/token/keeper"
-	tokentypes "github.com/irisnet/irismod/modules/token/types"
-	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
+	"github.com/furynet/furymod/modules/coinswap"
+	coinswapkeeper "github.com/furynet/furymod/modules/coinswap/keeper"
+	coinswaptypes "github.com/furynet/furymod/modules/coinswap/types"
+	"github.com/furynet/furymod/modules/farm"
+	farmkeeper "github.com/furynet/furymod/modules/farm/keeper"
+	farmtypes "github.com/furynet/furymod/modules/farm/types"
+	"github.com/furynet/furymod/modules/htlc"
+	htlckeeper "github.com/furynet/furymod/modules/htlc/keeper"
+	htlctypes "github.com/furynet/furymod/modules/htlc/types"
+	"github.com/furynet/furymod/modules/mt"
+	mtkeeper "github.com/furynet/furymod/modules/mt/keeper"
+	mttypes "github.com/furynet/furymod/modules/mt/types"
+	nftkeeper "github.com/furynet/furymod/modules/nft/keeper"
+	nftmodule "github.com/furynet/furymod/modules/nft/module"
+	nfttypes "github.com/furynet/furymod/modules/nft/types"
+	"github.com/furynet/furymod/modules/oracle"
+	oraclekeeper "github.com/furynet/furymod/modules/oracle/keeper"
+	oracletypes "github.com/furynet/furymod/modules/oracle/types"
+	"github.com/furynet/furymod/modules/random"
+	randomkeeper "github.com/furynet/furymod/modules/random/keeper"
+	randomtypes "github.com/furynet/furymod/modules/random/types"
+	"github.com/furynet/furymod/modules/record"
+	recordkeeper "github.com/furynet/furymod/modules/record/keeper"
+	recordtypes "github.com/furynet/furymod/modules/record/types"
+	"github.com/furynet/furymod/modules/service"
+	servicekeeper "github.com/furynet/furymod/modules/service/keeper"
+	servicetypes "github.com/furynet/furymod/modules/service/types"
+	"github.com/furynet/furymod/modules/token"
+	tokenkeeper "github.com/furynet/furymod/modules/token/keeper"
+	tokentypes "github.com/furynet/furymod/modules/token/types"
+	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
 
 	tibcmttransfer "github.com/bianjieai/tibc-go/modules/tibc/apps/mt_transfer"
 	tibcmttransferkeeper "github.com/bianjieai/tibc-go/modules/tibc/apps/mt_transfer/keeper"
@@ -149,18 +149,18 @@ import (
 	feemarketkeeper "github.com/evmos/ethermint/x/feemarket/keeper"
 	feemarkettypes "github.com/evmos/ethermint/x/feemarket/types"
 
-	"github.com/irisnet/irishub/address"
-	irishubante "github.com/irisnet/irishub/ante"
-	irisappparams "github.com/irisnet/irishub/app/params"
-	"github.com/irisnet/irishub/lite"
-	irisevm "github.com/irisnet/irishub/modules/evm"
-	"github.com/irisnet/irishub/modules/guardian"
-	guardiankeeper "github.com/irisnet/irishub/modules/guardian/keeper"
-	guardiantypes "github.com/irisnet/irishub/modules/guardian/types"
-	"github.com/irisnet/irishub/modules/mint"
-	mintkeeper "github.com/irisnet/irishub/modules/mint/keeper"
-	minttypes "github.com/irisnet/irishub/modules/mint/types"
-	iristypes "github.com/irisnet/irishub/types"
+	"github.com/furynet/furyhub/address"
+	furyhubante "github.com/furynet/furyhub/ante"
+	furyappparams "github.com/furynet/furyhub/app/params"
+	"github.com/furynet/furyhub/lite"
+	furyevm "github.com/furynet/furyhub/modules/evm"
+	"github.com/furynet/furyhub/modules/guardian"
+	guardiankeeper "github.com/furynet/furyhub/modules/guardian/keeper"
+	guardiantypes "github.com/furynet/furyhub/modules/guardian/types"
+	"github.com/furynet/furyhub/modules/mint"
+	mintkeeper "github.com/furynet/furyhub/modules/mint/keeper"
+	minttypes "github.com/furynet/furyhub/modules/mint/types"
+	furytypes "github.com/furynet/furyhub/types"
 )
 
 var (
@@ -331,7 +331,7 @@ func NewIrisApp(
 	skipUpgradeHeights map[int64]bool,
 	homePath string,
 	invCheckPeriod uint,
-	encodingConfig irisappparams.EncodingConfig,
+	encodingConfig furyappparams.EncodingConfig,
 	appOpts servertypes.AppOptions,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) *IrisApp {
@@ -341,7 +341,7 @@ func NewIrisApp(
 	legacyAmino := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
 
-	bApp := baseapp.NewBaseApp(iristypes.AppName, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
+	bApp := baseapp.NewBaseApp(furytypes.AppName, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
 	bApp.SetCommitMultiStoreTracer(traceStore)
 	bApp.SetVersion(version.Version)
 	bApp.SetInterfaceRegistry(interfaceRegistry)
@@ -588,12 +588,12 @@ func NewIrisApp(
 		app.ModuleAccountAddrs(),
 		authtypes.FeeCollectorName,
 	).WithSwapRegistry(tokenv1.SwapRegistry{
-		iristypes.NativeToken.MinUnit: tokenv1.SwapParams{
-			MinUnit: iristypes.EvmToken.MinUnit,
+		furytypes.NativeToken.MinUnit: tokenv1.SwapParams{
+			MinUnit: furytypes.EvmToken.MinUnit,
 			Ratio:   sdk.OneDec(),
 		},
-		iristypes.EvmToken.MinUnit: tokenv1.SwapParams{
-			MinUnit: iristypes.NativeToken.MinUnit,
+		furytypes.EvmToken.MinUnit: tokenv1.SwapParams{
+			MinUnit: furytypes.NativeToken.MinUnit,
 			Ratio:   sdk.OneDec(),
 		},
 	})
@@ -744,7 +744,7 @@ func NewIrisApp(
 		farm.NewAppModule(appCodec, app.FarmKeeper, app.AccountKeeper, app.BankKeeper),
 
 		// Ethermint app modules
-		irisevm.NewAppModule(app.EvmKeeper, app.AccountKeeper, app.BankKeeper),
+		furyevm.NewAppModule(app.EvmKeeper, app.AccountKeeper, app.BankKeeper),
 		feemarket.NewAppModule(app.FeeMarketKeeper),
 	)
 
@@ -931,8 +931,8 @@ func NewIrisApp(
 	app.MountMemoryStores(memKeys)
 
 	maxGasWanted := cast.ToUint64(appOpts.Get(srvflags.EVMMaxTxGasWanted))
-	anteHandler := irishubante.NewAnteHandler(
-		irishubante.HandlerOptions{
+	anteHandler := furyhubante.NewAnteHandler(
+		furyhubante.HandlerOptions{
 			HandlerOptions: ante.HandlerOptions{
 				AccountKeeper:   app.AccountKeeper,
 				BankKeeper:      app.BankKeeper,
@@ -995,7 +995,7 @@ func (app *IrisApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.R
 
 // InitChainer application update at chain initialization
 func (app *IrisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
-	var genesisState iristypes.GenesisState
+	var genesisState furytypes.GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
 	}

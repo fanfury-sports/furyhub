@@ -16,7 +16,7 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	govtypesv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 
-	"github.com/irisnet/irishub/app/params"
+	"github.com/furynet/furyhub/app/params"
 )
 
 const (
@@ -60,8 +60,8 @@ func mergeGenesisCmd(encodingConfig params.EncodingConfig) *cobra.Command {
 			return merge(encodingConfig.Marshaler, testnetGenesis, mainnetGenesis, outputFile)
 		},
 	}
-	cmd.Flags().String(testnetFile, "", "irishub testnet genesis")
-	cmd.Flags().String(mainnetFile, "", "irishub mainnet genesis")
+	cmd.Flags().String(testnetFile, "", "furyhub testnet genesis")
+	cmd.Flags().String(mainnetFile, "", "furyhub mainnet genesis")
 	cmd.Flags().String(outputFile, "", "merged genesis")
 	return cmd
 }

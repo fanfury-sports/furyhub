@@ -6,23 +6,23 @@ Token module allows you to manage assets on IRIS Hub
 
 | Name                                       | Description                                |
 | ------------------------------------------ | ------------------------------------------ |
-| [issue](#iris-tx-token-issue)              | Issue a new token                          |
-| [edit](#iris-tx-token-edit)                | Edit an existing token                     |
-| [transfer](#iris-tx-token-transfer)        | Transfer the ownership of a token          |
-| [mint](#iris-tx-token-mint)                | Mint tokens to a specified address         |
-| [burn](#iris-tx-token-burn)                | Burn some tokens                           |
-| [token](#iris-query-token-token)           | Query a token by symbol                    |
-| [tokens](#iris-query-token-tokens)         | Query tokens by owner                      |
-| [fee](#iris-query-token-fee)               | Query the token related fees               |
-| [params](#iris-query-token-params)         | Query the token related params             |
-| [total-burn](#iris-query-token-total-burn) | Query the total amount of all burn tokens. |
+| [issue](#fury-tx-token-issue)              | Issue a new token                          |
+| [edit](#fury-tx-token-edit)                | Edit an existing token                     |
+| [transfer](#fury-tx-token-transfer)        | Transfer the ownership of a token          |
+| [mint](#fury-tx-token-mint)                | Mint tokens to a specified address         |
+| [burn](#fury-tx-token-burn)                | Burn some tokens                           |
+| [token](#fury-query-token-token)           | Query a token by symbol                    |
+| [tokens](#fury-query-token-tokens)         | Query tokens by owner                      |
+| [fee](#fury-query-token-fee)               | Query the token related fees               |
+| [params](#fury-query-token-params)         | Query the token related params             |
+| [total-burn](#fury-query-token-total-burn) | Query the total amount of all burn tokens. |
 
-## iris tx token issue
+## fury tx token issue
 
 Issue a new token
 
 ```bash
-iris tx token issue [flags]
+fury tx token issue [flags]
 ```
 
 **Flags:**
@@ -40,7 +40,7 @@ iris tx token issue [flags]
 ### Issue a token
 
 ```bash
-iris tx token issue \
+fury tx token issue \
     --name="Kitty Token" \
     --symbol="kitty" \
     --min-unit="kitty" \
@@ -55,20 +55,20 @@ iris tx token issue \
 
 ### Send tokens
 
-You can send any tokens you have just like [sending iris](./bank.md#iris-tx-bank-send)
+You can send any tokens you have just like [sending fury](./bank.md#fury-tx-bank-send)
 
 #### Send tokens
 
 ```bash
-iris tx bank send [from_key_or_address] [to_address] [amount] [flags]
+fury tx bank send [from_key_or_address] [to_address] [amount] [flags]
 ```
 
-## iris tx token edit
+## fury tx token edit
 
 Edit an existing token
 
 ```bash
-iris tx token edit [symbol] [flags]
+fury tx token edit [symbol] [flags]
 ```
 
 **Flags:**
@@ -84,15 +84,15 @@ iris tx token edit [symbol] [flags]
 ### Edit Token
 
 ```bash
-iris tx token edit <symbol> --name="Cat Token" --max-supply=100000000000 --mintable=true --from=<key-name> --chain-id=<chain-id> --fees=<fee>
+fury tx token edit <symbol> --name="Cat Token" --max-supply=100000000000 --mintable=true --from=<key-name> --chain-id=<chain-id> --fees=<fee>
 ```
 
-## iris tx token transfer
+## fury tx token transfer
 
 Transfer the ownership of a token
 
 ```bash
-iris tx token transfer [symbol] [flags]
+fury tx token transfer [symbol] [flags]
 ```
 
 **Flags:**
@@ -104,15 +104,15 @@ iris tx token transfer [symbol] [flags]
 ### Transfer Token Owner
 
 ```bash
-iris tx token transfer <symbol> --to=<to> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
+fury tx token transfer <symbol> --to=<to> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
 ```
 
-## iris tx token mint
+## fury tx token mint
 
 Mint tokens to a specified address
 
 ```bash
-iris tx token mint [symbol] [flags]
+fury tx token mint [symbol] [flags]
 ```
 
 **Flags:**
@@ -125,15 +125,15 @@ iris tx token mint [symbol] [flags]
 ### Mint Token
 
 ```bash
-iris tx token mint <symbol> --amount=<amount> --to=<to> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
+fury tx token mint <symbol> --amount=<amount> --to=<to> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
 ```
 
-## iris tx token burn
+## fury tx token burn
 
 Burn some tokens
 
 ```bash
-iris tx token burn [symbol] [flags]
+fury tx token burn [symbol] [flags]
 ```
 
 **Flags:**
@@ -145,81 +145,81 @@ iris tx token burn [symbol] [flags]
 ### Burn Token
 
 ```bash
-iris tx token burn <symbol> --amount=<amount> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
+fury tx token burn <symbol> --amount=<amount> --from=<key-name> --chain-id=<chain-id> --fees=<fee>
 ```
 
-## iris query token token
+## fury query token token
 
 Query a token by symbol
 
 ```bash
-iris query token token [denom] [flags]
+fury query token token [denom] [flags]
 ```
 
 ### Query a token
 
 ```bash
-iris query token token <denom>
+fury query token token <denom>
 ```
 
-## iris query token tokens
+## fury query token tokens
 
 Query tokens by the owner which is optional
 
 ```bash
-iris query token tokens [owner] [flags]
+fury query token tokens [owner] [flags]
 ```
 
 ### Query all tokens
 
 ```bash
-iris query token tokens
+fury query token tokens
 ```
 
 ### Query tokens with the specified owner
 
 ```bash
-iris query token tokens <owner>
+fury query token tokens <owner>
 ```
 
-## iris query token fee
+## fury query token fee
 
 Query the token related fees, including token issuance and minting
 
 ```bash
-iris query token fee [symbol] [flags]
+fury query token fee [symbol] [flags]
 ```
 
 ### Query fees of issuing and minting a token
 
 ```bash
-iris query token fee kitty
+fury query token fee kitty
 ```
 
-## iris query token params
+## fury query token params
 
 Query token module params
 
 ```bash
-iris query token params [flags]
+fury query token params [flags]
 ```
 
 ### Query token module params
 
 ```bash
-iris query token params
+fury query token params
 ```
 
-## iris query token total-burn
+## fury query token total-burn
 
 Query the total amount of all burn tokens
 
 ```bash
-iris query token total-burn [flags]
+fury query token total-burn [flags]
 ```
 
 ### Query the total amount of all burn tokens
 
 ```bash
-iris query token total-burn
+fury query token total-burn
 ```

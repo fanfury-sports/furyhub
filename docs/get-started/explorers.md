@@ -6,9 +6,9 @@ order: 6
 
 These block explorers allow you to search, view and analyze IRIS Hub data—like blocks, transactions, validators, governance including params or proposals, etc.
 
-- [IOBScan](https://irishub.iobscan.io/)
-- [Big-Dipper](https://iris.bigdipper.live/)
-- [Hubble](https://hubble.figment.network/iris/chains/irishub)
-- [Mintscan](https://irishub.mintscan.io/)
-- [LOOK](https://iris.ping.pub/#/validator)
-- [ATOMScan](https://atomscan.com/iris-network)
+- [IOBScan](https://furyhub.iobscan.io/)
+- [Big-Dipper](https://fury.bigdipper.live/)
+- [Hubble](https://hubble.figment.network/fury/chains/furyhub)
+- [Mintscan](https://furyhub.mintscan.io/)
+- [LOOK](https://fury.ping.pub/#/validator)
+- [ATOMScan](https://atomscan.com/fury-network)

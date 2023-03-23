@@ -11,13 +11,13 @@ SDK_VERSION=v0.46.5
 IRISMOD_VERSION=v1.7.2
 
 go mod download github.com/cosmos/cosmos-sdk@${SDK_VERSION}
-go mod download github.com/irisnet/irismod@${IRISMOD_VERSION}
+go mod download github.com/furynet/furymod@${IRISMOD_VERSION}
 
 chmod -R 755 ${GOPATH}/pkg/mod/github.com/cosmos/cosmos-sdk@${SDK_VERSION}/proto
-chmod -R 755 ${GOPATH}/pkg/mod/github.com/irisnet/irismod@${IRISMOD_VERSION}/proto
+chmod -R 755 ${GOPATH}/pkg/mod/github.com/furynet/furymod@${IRISMOD_VERSION}/proto
 
 cp -r ${GOPATH}/pkg/mod/github.com/cosmos/cosmos-sdk@${SDK_VERSION}/proto ./tmp && rm -rf ./tmp/proto/cosmos/mint
-cp -r ${GOPATH}/pkg/mod/github.com/irisnet/irismod@${IRISMOD_VERSION}/proto ./tmp
+cp -r ${GOPATH}/pkg/mod/github.com/furynet/furymod@${IRISMOD_VERSION}/proto ./tmp
 cp -r ./proto ./tmp
 
 proto_dirs=$(find ./tmp/proto -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
@@ -45,8 +45,8 @@ sed -r -i 's/cosmos1[a-z,0-9]+/iaa1sltcyjm5k0edlg59t47lsyw8gtgc3nudklntcq/g' ./l
 sed -r -i 's/cosmosvaloper1[a-z,0-9]+/iva1sltcyjm5k0edlg59t47lsyw8gtgc3nudrwey98/g' ./lite/swagger-ui/swagger.yaml
 sed -r -i 's/cosmosvalconspub1[a-z,0-9]+/icp1zcjduepqwhwqn4h5v6mqa7k3kmy7cjzchsx5ptsrqaulwrgfmghy3k9jtdzs6rdddm/g' ./lite/swagger-ui/swagger.yaml
 sed -i 's/Gaia/IRIShub/g' ./lite/swagger-ui/swagger.yaml
-sed -i 's/gaia/irishub/g' ./lite/swagger-ui/swagger.yaml
-sed -i 's/cosmoshub/irishub/g' ./lite/swagger-ui/swagger.yaml
+sed -i 's/gaia/furyhub/g' ./lite/swagger-ui/swagger.yaml
+sed -i 's/cosmoshub/furyhub/g' ./lite/swagger-ui/swagger.yaml
 
 # TODO
 # generate proto doc

@@ -6,8 +6,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 
-	servicekeeper "github.com/irisnet/irismod/modules/service/keeper"
-	servicetypes "github.com/irisnet/irismod/modules/service/types"
+	servicekeeper "github.com/furynet/furymod/modules/service/keeper"
+	servicetypes "github.com/furynet/furymod/modules/service/types"
 )
 
 const (

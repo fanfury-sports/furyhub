@@ -19,8 +19,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	tokentypes "github.com/irisnet/irismod/modules/token/types"
-	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
+	tokentypes "github.com/furynet/furymod/modules/token/types"
+	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
 )
 
 const (

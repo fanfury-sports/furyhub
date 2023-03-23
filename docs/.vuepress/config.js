@@ -45,7 +45,7 @@ module.exports = {
         }
     },
     themeConfig: {
-        repo: "irisnet/irishub",
+        repo: "furynet/furyhub",
         docsDir: "docs",
         editLinks: true,
         docsBranch: "master",
@@ -56,7 +56,7 @@ module.exports = {
                 nav: [
                     {
                         text: 'Back to IRISnet',
-                        link: 'https://www.irisnet.org'
+                        link: 'https://www.furynet.org'
                     }
                 ],
                 sidebar: sidebar("", [

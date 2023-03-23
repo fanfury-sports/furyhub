@@ -28,8 +28,8 @@ AnnualInflationAmount = inflationBasement * inflationRate
 blockInflationAmount = AnnualInflationAmount * blockCostTime / (year)
 ```
 
-The value of `inflationBasement` is specified in genesis file. By default its value `2000000000iris`(2 billion iris, `1 iris` equals `1*10^18 uiris`), and its value will never be changed.
-Suppose `blockCostTime` is 5000 millisecond, and `inflationRate` is `4%`, then the inflation amount will be `12675235125611580094uiris` (`12.675235125611580094iris`)
+The value of `inflationBasement` is specified in genesis file. By default its value `2000000000fury`(2 billion fury, `1 fury` equals `1*10^18 ufury`), and its value will never be changed.
+Suppose `blockCostTime` is 5000 millisecond, and `inflationRate` is `4%`, then the inflation amount will be `12675235125611580094ufury` (`12.675235125611580094fury`)
 
 ## Impact to users
 
@@ -37,12 +37,12 @@ The inflation calculation is automatically triggered by each block. So once a ne
 
 There is a command line interface and one LCD restful APIs which can query total loose tokens amount.
 
-`iris q staking pool`
+`fury q staking pool`
 
 This is much faster, but it cannot get merkle proof and verify proof. So if you doesn't trust the connected full node, please don't use this interface.
 
 ```bash
-iris q staking pool --node=<iris-node-url>
+fury q staking pool --node=<fury-node-url>
 ```
 
 Example Output:

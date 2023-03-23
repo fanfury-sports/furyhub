@@ -155,7 +155,7 @@ The parameters of modules can be changed by demand through a proposal of paramet
 
 ```bash
 # Query module parameters which can be changed through gov. e.g. query the service params
-iris query service params
+fury query service params
 
 # Parameter list
 arbitration_time_limit: 432000s
@@ -181,10 +181,10 @@ echo '{
         "value": 150
         }
     ],
-    "deposit": "1000iris"
+    "deposit": "1000fury"
 }' > proposal.json
 
-iris tx gov submit-legacy-proposal param-change proposal.json --from=<key-name> --fees=0.3iris --chain-id=irishub
+fury tx gov submit-legacy-proposal param-change proposal.json --from=<key-name> --fees=0.3fury --chain-id=furyhub
 ```
 
 ### Community pool spending
@@ -197,11 +197,11 @@ echo '{
     "title": "Community Pool Spend",
     "description": "Developer rewards",
     "recipient": "iaa1s5afhd6gxevu37mkqcvvsj8qeylhn0rz46zdlq",
-    "amount": "10000iris",
-    "deposit": "1000iris"
+    "amount": "10000fury",
+    "deposit": "1000fury"
 }' > proposal.json
 
-iris tx gov submit-legacy-proposal community-pool-spend proposal.json --from=<key-name> --fees=0.3iris --chain-id=irishub
+fury tx gov submit-legacy-proposal community-pool-spend proposal.json --from=<key-name> --fees=0.3fury --chain-id=furyhub
 ```
 
 ### Software upgrade

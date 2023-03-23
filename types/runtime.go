@@ -10,9 +10,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/irisnet/irishub/address"
-	tokentypes "github.com/irisnet/irismod/modules/token/types"
-	tokenv1 "github.com/irisnet/irismod/modules/token/types/v1"
+	"github.com/furynet/furyhub/address"
+	tokentypes "github.com/furynet/furymod/modules/token/types"
+	tokenv1 "github.com/furynet/furymod/modules/token/types/v1"
 )
 
 const (
@@ -35,10 +35,10 @@ func init() {
 	})
 
 	NativeToken = tokenv1.Token{
-		Symbol:        "iris",
+		Symbol:        "fury",
 		Name:          "Irishub staking token",
 		Scale:         6,
-		MinUnit:       "uiris",
+		MinUnit:       "ufury",
 		InitialSupply: 2000000000,
 		MaxSupply:     10000000000,
 		Mintable:      true,
@@ -62,7 +62,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, ".iris")
+	DefaultNodeHome = filepath.Join(userHomeDir, ".fury")
 	owner, err := sdk.AccAddressFromBech32(NativeToken.Owner)
 	if err != nil {
 		panic(err)
