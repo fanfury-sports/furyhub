@@ -98,11 +98,11 @@ func merge(cdc codec.Codec, testnet, mainnet *types.GenesisDoc, output string) (
 
 var filterAddrs = map[string]bool{
 	//distribution
-	"did:fury:aa1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8jaydtw": true,
+	"did:fury:iaa1jv65s3grqf6v6jl3dp4t6c9t9rk99cd8jaydtw": true,
 	//not_bonded_tokens_pool
-	"did:fury:aa1tygms3xhhs3yv487phx3dw4a95jn7t7l5e40dj": true,
+	"did:fury:iaa1tygms3xhhs3yv487phx3dw4a95jn7t7l5e40dj": true,
 	//bonded_tokens_pool
-	"did:fury:aa1fl48vsnmsdzcv85q5d2q4z5ajdha8yu3qef7mx": true,
+	"did:fury:iaa1fl48vsnmsdzcv85q5d2q4z5ajdha8yu3qef7mx": true,
 }
 
 func mergeBank(cdc codec.Codec, testnet, mainnet map[string]json.RawMessage) {
