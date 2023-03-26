@@ -233,7 +233,7 @@ The following infos will be shown:
 ```bash
 - name: Mykey
   type: local
-  address: iaa1tulwx2hwz4dv8te6cflhda64dn0984harlzegw
+  address: did:fury:iaa1tulwx2hwz4dv8te6cflhda64dn0984harlzegw
   pubkey: iap1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgwzc4k0
   mnemonic: ""
   threshold: 0
@@ -253,8 +253,8 @@ Example Output:
 ```bash
 - name: Mykey
   type: local
-  address: iva1tulwx2hwz4dv8te6cflhda64dn0984hakwgk4f
-  pubkey: ivp1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgd8e6zy
+  address: did:fury:iva1tulwx2hwz4dv8te6cflhda64dn0984hakwgk4f
+  pubkey: did:fury:ivp1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgd8e6zy
   mnemonic: ""
   threshold: 0
   pubkeys: []

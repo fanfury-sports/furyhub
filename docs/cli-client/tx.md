@@ -39,7 +39,7 @@ You can generate any type of txs offline by appending the flag `--generate-only`
 We use a transfer tx in the following examples:
 
 ```bash
-fury tx bank send iaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx iaa15uys54epmd2xzhcn32szps56wvev40tt908h62 10fury --chain-id=furyhub --generate-only
+fury tx bank send did:fury:iaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx did:fury:iaa15uys54epmd2xzhcn32szps56wvev40tt908h62 10fury --chain-id=furyhub --generate-only
 ```
 
 The `unsigned.json` should look like:
@@ -52,8 +52,8 @@ The `unsigned.json` should look like:
             {
                 "type": "cosmos-sdk/MsgSend",
                 "value": {
-                    "from_address": "iaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx",
-                    "to_address": "iaa15uys54epmd2xzhcn32szps56wvev40tt908h62",
+                    "from_address": "did:fury:iaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx",
+                    "to_address": "did:fury:iaa15uys54epmd2xzhcn32szps56wvev40tt908h62",
                     "amount": [
                         {
                             "denom": "fury",
@@ -91,7 +91,7 @@ The `signed.json` should look like:
                 "value": {
                     "inputs": [
                         {
-                            "address": "iaa106nhdckyf996q69v3qdxwe6y7408pvyvyxzhxh",
+                            "address": "did:fury:iaa106nhdckyf996q69v3qdxwe6y7408pvyvyxzhxh",
                             "coins": [
                                 {
                                     "denom": "ufury",
@@ -102,7 +102,7 @@ The `signed.json` should look like:
                     ],
                     "outputs": [
                         {
-                            "address": "iaa1893x4l2rdshytfzvfpduecpswz7qtpstevr742",
+                            "address": "did:fury:iaa1893x4l2rdshytfzvfpduecpswz7qtpstevr742",
                             "coins": [
                                 {
                                     "denom": "ufury",
