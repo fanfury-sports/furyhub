@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	EIP155ChainID = "6688"
+	EIP155ChainID = "4200"
 )
 
 func BuildEthChainID(chainID string) string {
