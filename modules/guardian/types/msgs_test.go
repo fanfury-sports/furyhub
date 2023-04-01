@@ -51,7 +51,7 @@ func TestMsgAddSuperType(t *testing.T) {
 func TestMsgAddSuperGetSignBytes(t *testing.T) {
 	msg := NewMsgAddSuper(description, testAddr, sender)
 	res := msg.GetSignBytes()
-	expected := `{"type":"furyhub/guardian/MsgAddSuper","value":{"added_by":"did:fury:iaa1pgm8hyk0pvphmlvfjc8wsvk4daluz5tgwp4wlf","address":"did:fury:iaa1n7rdpqvgf37ktx30a2sv2kkszk3m7ncmakdj4g","description":"description"}}`
+	expected := `{"type":"furyhub/guardian/MsgAddSuper","value":{"added_by":"did:fury:iaa1pgm8hyk0pvphmlvfjc8wsvk4daluz5tgarmkm5","address":"did:fury:iaa1n7rdpqvgf37ktx30a2sv2kkszk3m7ncmw5r234","description":"description"}}`
 	require.Equal(t, expected, string(res))
 }
 
@@ -110,7 +110,7 @@ func TestMsgDeleteSuperType(t *testing.T) {
 func TestMsgDeleteSuperGetSignBytes(t *testing.T) {
 	msg := NewMsgDeleteSuper(testAddr, sender)
 	res := msg.GetSignBytes()
-	expected := `{"type":"furyhub/guardian/MsgDeleteSuper","value":{"address":"did:fury:iaa1n7rdpqvgf37ktx30a2sv2kkszk3m7ncmakdj4g","deleted_by":"did:fury:iaa1pgm8hyk0pvphmlvfjc8wsvk4daluz5tgwp4wlf"}}`
+	expected := `{"type":"furyhub/guardian/MsgDeleteSuper","value":{"address":"did:fury:iaa1n7rdpqvgf37ktx30a2sv2kkszk3m7ncmw5r234","deleted_by":"did:fury:iaa1pgm8hyk0pvphmlvfjc8wsvk4daluz5tgarmkm5"}}`
 	require.Equal(t, expected, string(res))
 }
 
