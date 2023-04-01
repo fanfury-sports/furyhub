@@ -60,8 +60,8 @@ Example Output:
 
 ```bash
 Delegation:
-  Delegator:  iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
-  Validator:  iva15grv3xg3ekxh9xrf79zd0w077krgv5xfzzunhs
+  Delegator:  did:fury:iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
+  Validator:  did:fury:iva15grv3xg3ekxh9xrf79zd0w077krgv5xfzzunhs
   Shares:     1.0000000000000000000000000000
   Height:     26
 ```
@@ -98,13 +98,13 @@ Example Output:
 
 ```bash
 Delegation:
-  Delegator:  iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
-  Validator:  iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
+  Delegator:  did:fury:iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
+  Validator:  did:fury:iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
   Shares:     100.0000000000000000000000000000
   Height:     0
 Delegation:
-  Delegator:  iaa1td4xnefkthfs6jg469x33shzf578fed6n7k7ua
-  Validator:  iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
+  Delegator:  did:fury:iaa1td4xnefkthfs6jg469x33shzf578fed6n7k7ua
+  Validator:  did:fury:iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
   Shares:     1.0000000000000000000000000000
   Height:     26
 ```
