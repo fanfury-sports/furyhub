@@ -11,6 +11,9 @@ NetworkType := $(shell if [ -z ${NetworkType} ]; then echo "mainnet"; else echo 
 CURRENT_DIR = $(shell pwd)
 PROJECT_NAME = $(shell git remote get-url origin | xargs basename -s .git)
 
+# default mainnet EVM_CHAIN_ID
+EVM_CHAIN_ID ?= 4200
+
 export GO111MODULE = on
 
 # process build tags
@@ -56,7 +59,7 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=fury \
 		  -X github.com/cosmos/cosmos-sdk/version.AppName=fury \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X github.com/furynet/furyhub/types.EIP155ChainID=4200 \
+		  -X github.com/furynet/furyhub/types.EIP155ChainID=$(EVM_CHAIN_ID) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
 ifeq ($(WITH_CLEVELDB),yes)
@@ -74,17 +77,17 @@ all: tools install lint
 # The below include contains the tools.
 include contrib/devtools/Makefile
 
-build: go.sum
+build: check-evm-chain-id go.sum
 ifeq ($(OS),Windows_NT)
-	go build $(BUILD_FLAGS) -o build/fury.exe ./cmd/fury
+	@go build $(BUILD_FLAGS) -o build/fury.exe ./cmd/fury
 else
-	go build $(BUILD_FLAGS) -o build/fury ./cmd/fury
+	@go build $(BUILD_FLAGS) -o build/fury ./cmd/fury
 endif
 
-build-linux: go.sum
+build-linux: check-evm-chain-id go.sum
 	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
 
-build-all-binary: go.sum
+build-all-binary: check-evm-chain-id go.sum
 	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-linux-amd64 ./cmd/fury
 	LEDGER_ENABLED=false GOOS=linux GOARCH=arm64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-linux-arm64 ./cmd/fury
 	LEDGER_ENABLED=false GOOS=windows GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-windows-amd64.exe ./cmd/fury
@@ -96,8 +99,11 @@ else
 	go build -mod=readonly $(BUILD_FLAGS) -o build/contract_tests ./cmd/contract_tests
 endif
 
-install: go.sum
-	go install $(BUILD_FLAGS) ./cmd/fury
+install: check-evm-chain-id go.sum
+	@go install $(BUILD_FLAGS) ./cmd/fury
+
+check-evm-chain-id:
+	@echo "note: EVM_CHAIN_ID is $(EVM_CHAIN_ID)"
 
 update-swagger-docs: statik proto-swagger-gen
 	$(BINDIR)/statik -src=lite/swagger-ui -dest=lite -f -m
@@ -198,15 +204,15 @@ benchmark:
 ### Local validator nodes using docker and docker-compose
 
 testnet-init:
-	@if ! [ -f build/nodecluster/node0/fury/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/home furynet/furyhub fury testnet --v 4 --output-dir /home/nodecluster --chain-id furyhub-test --keyring-backend test --starting-ip-address 192.168.10.2 ; fi
+	@if ! [ -f build/nodecluster/node0/fury/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/home fanfury/fanfury:hub-latest fury testnet --v 4 --output-dir /home/nodecluster --chain-id furyhub-test --keyring-backend test --starting-ip-address 192.168.10.2 ; fi
 	@echo "To install jq command, please refer to this page: https://stedolan.github.io/jq/download/"
-	@jq '.app_state.auth.accounts+= [{"@type":"/cosmos.auth.v1beta1.BaseAccount","address":"did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","pub_key":null,"account_number":"0","sequence":"0"}] | .app_state.bank.balances+= [{"address":"did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","coins":[{"denom":"ufury","amount":"1000000000000"}]}]' build/nodecluster/node0/fury/config/genesis.json > build/genesis_temp.json ;
+	@jq '.app_state.auth.accounts+= [{"@type":"/cosmos.auth.v1beta1.BaseAccount","address":"iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","pub_key":null,"account_number":"0","sequence":"0"}] | .app_state.bank.balances+= [{"address":"iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","coins":[{"denom":"ufury","amount":"1000000000000"}]}]' build/nodecluster/node0/fury/config/genesis.json > build/genesis_temp.json ;
 	@sudo cp build/genesis_temp.json build/nodecluster/node0/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node1/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node2/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node3/fury/config/genesis.json
 	@rm build/genesis_temp.json
-	@echo "Faucet address: did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx" ;
+	@echo "Faucet address: iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx" ;
 	@echo "Faucet coin amount: 1000000000000ufury"
 	@echo "Faucet key seed: tube lonely pause spring gym veteran know want grid tired taxi such same mesh charge orient bracket ozone concert once good quick dry boss"
 
