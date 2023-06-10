@@ -20,7 +20,7 @@ const (
 	PrefixPublic = "p"
 
 	// PrefixAddress is the prefix for address
-	PrefixAddress = "a"
+	PrefixAddress = "f"
 
 	// Bech32PrefixAccAddr defines the Bech32 prefix of an account's address
 	Bech32PrefixAccAddr = Bech32ChainPrefix + PrefixAcc + PrefixAddress
