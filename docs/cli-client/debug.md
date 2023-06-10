@@ -13,7 +13,7 @@ A tool for simple debugging.
 ### fury debug addr
 
 ```bash
-fury debug addr did:fury:iaa1rulhmls7g9cjh239vnkjnw870t5urrutsfwvmc
+fury debug addr blackaa1rulhmls7g9cjh239vnkjnw870t5urrutsfwvmc
 ```
 
 returns
@@ -21,8 +21,8 @@ returns
 ```bash
 Address: [31 63 125 254 30 65 113 43 170 37 100 237 41 184 254 122 233 193 143 139]
 Address (hex): 1F3F7DFE1E41712BAA2564ED29B8FE7AE9C18F8B
-Bech32 Acc: did:fury:iaa1rulhmls7g9cjh239vnkjnw870t5urrutsfwvmc
-Bech32 Val: did:fury:iva1rulhmls7g9cjh239vnkjnw870t5urrut9cyrxl
+Bech32 Acc: blackaa1rulhmls7g9cjh239vnkjnw870t5urrutsfwvmc
+Bech32 Val: blackva1rulhmls7g9cjh239vnkjnw870t5urrut9cyrxl
 ```
 
 ### fury debug pubkey

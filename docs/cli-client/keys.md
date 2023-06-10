@@ -233,8 +233,8 @@ The following infos will be shown:
 ```bash
 - name: Mykey
   type: local
-  address: did:fury:iaa1tulwx2hwz4dv8te6cflhda64dn0984harlzegw
-  pubkey: did:fury:did:fury:iap1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgwzc4k0
+  address: blackaa1tulwx2hwz4dv8te6cflhda64dn0984harlzegw
+  pubkey: blackap1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgwzc4k0
   mnemonic: ""
   threshold: 0
   pubkeys: []
@@ -242,7 +242,7 @@ The following infos will be shown:
 
 ### Get validator operator address
 
-If an address has been bonded to be a validator operator (which the address you used to create a validator), then you can use `--bech val` to get the operator's address prefixed by `iva` and the pubkey prefixed by `ivp`:
+If an address has been bonded to be a validator operator (which the address you used to create a validator), then you can use `--bech val` to get the operator's address prefixed by `iva` and the pubkey prefixed by `blackvp`:
 
 ```bash
 fury keys show MyKey --bech val
@@ -253,8 +253,8 @@ Example Output:
 ```bash
 - name: Mykey
   type: local
-  address: did:fury:iva1tulwx2hwz4dv8te6cflhda64dn0984hakwgk4f
-  pubkey: did:fury:ivp1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgd8e6zy
+  address: blackva1tulwx2hwz4dv8te6cflhda64dn0984hakwgk4f
+  pubkey: blackvp1addwnpepq24rufap6u0sysqcpgsfzqhw3x8nfkhqhtmpgqt0369rlyqcg0vkgd8e6zy
   mnemonic: ""
   threshold: 0
   pubkeys: []

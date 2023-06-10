@@ -16,7 +16,7 @@ yes PASSWORD | fury keys add $USER 2>&1 | tee account.txt
 # hardcode the validator account for this instance
 yes PASSWORD | fury add-genesis-account $USER "120000020000utfury"
 
-yes PASSWORD | fury add-genesis-account 'did:fury:iaa13kkekwjl8g8hx7laveepjqkm8kfa5een4fdxl2' "120000020000utfury"
+yes PASSWORD | fury add-genesis-account 'blackaa13kkekwjl8g8hx7laveepjqkm8kfa5een4fdxl2' "120000020000utfury"
 
 sed -i -e 's/enabled-unsafe-cors *= *.*/enabled-unsafe-cors = true/g' .fury/config/app.toml
 sed -i -e 's/cors_allowed_origins *= *.*/cors_allowed_origins = \[\"*\"\]/g' .fury/config/config.toml

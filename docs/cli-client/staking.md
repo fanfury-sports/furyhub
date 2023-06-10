@@ -53,15 +53,15 @@ fury query staking delegation [delegator-addr] [validator-addr]
 ### Query a delegation
 
 ```bash
-fury query staking delegation <iaa...> <iva...>
+fury query staking delegation <blackaa...> <iva...>
 ```
 
 Example Output:
 
 ```bash
 Delegation:
-  Delegator:  did:fury:iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
-  Validator:  did:fury:iva15grv3xg3ekxh9xrf79zd0w077krgv5xfzzunhs
+  Delegator:  blackaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
+  Validator:  blackva15grv3xg3ekxh9xrf79zd0w077krgv5xfzzunhs
   Shares:     1.0000000000000000000000000000
   Height:     26
 ```
@@ -77,7 +77,7 @@ fury query staking delegations [delegator-address] [flags]
 ### Query all delegations of a delegator
 
 ```bash
-fury query staking delegations <iaa...>
+fury query staking delegations <blackaa...>
 ```
 
 ## fury query staking delegations-to
@@ -98,13 +98,13 @@ Example Output:
 
 ```bash
 Delegation:
-  Delegator:  did:fury:iaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
-  Validator:  did:fury:iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
+  Delegator:  blackaa13lcwnxpyn2ea3skzmek64vvnp97jsk8qrcezvm
+  Validator:  blackva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
   Shares:     100.0000000000000000000000000000
   Height:     0
 Delegation:
-  Delegator:  did:fury:iaa1td4xnefkthfs6jg469x33shzf578fed6n7k7ua
-  Validator:  did:fury:iva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
+  Delegator:  blackaa1td4xnefkthfs6jg469x33shzf578fed6n7k7ua
+  Validator:  blackva1yclscskdtqu9rgufgws293wxp3njsesxxlnhmh
   Shares:     1.0000000000000000000000000000
   Height:     26
 ```
@@ -120,7 +120,7 @@ fury query staking unbonding-delegation [delegator-addr] [validator-addr] [flags
 ### Query an unbonding delegation record
 
 ```bash
-fury query staking unbonding-delegation <iaa...> <iva...>
+fury query staking unbonding-delegation <blackaa...> <iva...>
 ```
 
 ## fury query staking unbonding-delegations
@@ -128,7 +128,7 @@ fury query staking unbonding-delegation <iaa...> <iva...>
 ### Query all unbonding delegations records of a delegator
 
 ```bash
-fury query staking unbonding-delegations <iaa...>
+fury query staking unbonding-delegations <blackaa...>
 ```
 
 ## fury query staking unbonding-delegations-from
@@ -164,7 +164,7 @@ fury query staking redelegation [delegator-addr] [src-validator-addr] [dst-valid
 ### Query a redelegation record
 
 ```bash
-fury query staking redelegation <iaa...> <iva...> <iva...>
+fury query staking redelegation <blackaa...> <iva...> <iva...>
 ```
 
 ## fury query staking redelegations
@@ -172,7 +172,7 @@ fury query staking redelegation <iaa...> <iva...> <iva...>
 ### Query all redelegations records of a delegator
 
 ```bash
-fury query staking redelegations <iaa...>
+fury query staking redelegations <blackaa...>
 ```
 
 ## fury query staking pool

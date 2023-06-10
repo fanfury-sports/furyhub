@@ -56,7 +56,7 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=fury \
 		  -X github.com/cosmos/cosmos-sdk/version.AppName=fury \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X github.com/fanfury/fanfury:furyhub/types.EIP155ChainID=4200 \
+		  -X github.com/fanfury/fanfury:furyhub/types.EIP155ChainID=710 \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
 ifeq ($(WITH_CLEVELDB),yes)
@@ -200,14 +200,14 @@ benchmark:
 testnet-init:
 	@if ! [ -f build/nodecluster/node0/fury/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/home fanfury/fanfury:furyhub fury testnet --v 4 --output-dir /home/nodecluster --chain-id furyhub-test --keyring-backend test --starting-ip-address 192.168.10.2 ; fi
 	@echo "To install jq command, please refer to this page: https://stedolan.github.io/jq/download/"
-	@jq '.app_state.auth.accounts+= [{"@type":"/cosmos.auth.v1beta1.BaseAccount","address":"did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","pub_key":null,"account_number":"0","sequence":"0"}] | .app_state.bank.balances+= [{"address":"did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","coins":[{"denom":"ufury","amount":"420000000"}]}]' build/nodecluster/node0/fury/config/genesis.json > build/genesis_temp.json ;
+	@jq '.app_state.auth.accounts+= [{"@type":"/cosmos.auth.v1beta1.BaseAccount","address":"blackaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","pub_key":null,"account_number":"0","sequence":"0"}] | .app_state.bank.balances+= [{"address":"blackaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","coins":[{"denom":"ufury","amount":"71000000"}]}]' build/nodecluster/node0/fury/config/genesis.json > build/genesis_temp.json ;
 	@sudo cp build/genesis_temp.json build/nodecluster/node0/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node1/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node2/fury/config/genesis.json
 	@sudo cp build/genesis_temp.json build/nodecluster/node3/fury/config/genesis.json
 	@rm build/genesis_temp.json
-	@echo "Faucet address: did:fury:iaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx" ;
-	@echo "Faucet coin amount: 42000000000ufury"
+	@echo "Faucet address: blackaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx" ;
+	@echo "Faucet coin amount: 7100000000ufury"
 	@echo "Faucet key seed: tube lonely pause spring gym veteran know want grid tired taxi such same mesh charge orient bracket ozone concert once good quick dry boss"
 
 testnet-start:
