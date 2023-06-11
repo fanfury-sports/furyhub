@@ -39,7 +39,7 @@ func init() {
 		Name:          "Furyhub staking token",
 		Scale:         6,
 		MinUnit:       "ufury",
-		InitialSupply: 48000000,
+		InitialSupply: 212000000,
 		MaxSupply:     420000000,
 		Mintable:      true,
 		Owner:         sdk.AccAddress(crypto.AddressHash([]byte(tokentypes.ModuleName))).String(),
@@ -47,10 +47,10 @@ func init() {
 
 	// TODO
 	EvmToken = tokenv1.Token{
-		Symbol:        "eth",
+		Symbol:        "efury",
 		Name:          "Furyhub evm token",
 		Scale:         18,
-		MinUnit:       "wei",
+		MinUnit:       "wefury",
 		InitialSupply: 0,
 		MaxSupply:     math.MaxUint64,
 		Mintable:      true,
