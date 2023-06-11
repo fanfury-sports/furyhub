@@ -1,6 +1,6 @@
 KEY="mykey"
 KEY2="mykey2"
-CHAINID="highbury_7701-1"
+CHAINID="highbury_710-1"
 MONIKER="samael"
 KEYRING="test"
 KEYALGO="secp256k1"
