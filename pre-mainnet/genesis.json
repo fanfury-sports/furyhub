@@ -1,6 +1,6 @@
 {
-  "genesis_time": "2023-06-11T07:50:28.381866226Z",
-  "chain_id": "redshift-1",
+  "genesis_time": "2023-06-11T08:38:23.833904799Z",
+  "chain_id": "highbury_710-1",
   "initial_height": "1",
   "consensus_params": {
     "block": {
@@ -35,14 +35,7 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "blackaf1x64knyvnefwqj9yvjt9g920vpr3zjhvl58wcy0",
-          "pub_key": null,
-          "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "blackaf18aapcdjuznn062ncynxrgsw4amfqgmntr9e79e",
+          "address": "blackaf18q9jkkpk647fux929zqltcypmxgl67w2sty9ku",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
@@ -59,16 +52,7 @@
       },
       "balances": [
         {
-          "address": "blackaf1x64knyvnefwqj9yvjt9g920vpr3zjhvl58wcy0",
-          "coins": [
-            {
-              "denom": "ufury",
-              "amount": "200000000000"
-            }
-          ]
-        },
-        {
-          "address": "blackaf18aapcdjuznn062ncynxrgsw4amfqgmntr9e79e",
+          "address": "blackaf18q9jkkpk647fux929zqltcypmxgl67w2sty9ku",
           "coins": [
             {
               "denom": "ufury",
@@ -221,7 +205,7 @@
       },
       "htlcs": [],
       "supplies": [],
-      "previous_block_time": "2023-06-11T07:50:28.360185658Z"
+      "previous_block_time": "2023-06-11T08:38:23.813931961Z"
     },
     "ibc": {
       "client_genesis": {
