@@ -39,7 +39,43 @@
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
-        }
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "blackaf10uugwvyurljmp5w99y6k5m8z0we3qqwzl89quk",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "blackaf1tkzx82jruvsuakr7mxspa9pp0d2um7jgvxtq6y",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "blackaf1pykq2ah3e4zkz9mcsnxwl2sdhk0m8duwc5jw84",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "blackaf1amzmu9l8zf46n2d7dw66x0qzwlndjw7qrw9msc",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "blackaf1qtwt5kmc9p8v2eu8m9akk9c03u272k0p22yedn",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
+        },
+        
       ]
     },
     "authz": {
@@ -59,7 +95,53 @@
               "amount": "200000000000"
             }
           ]
-        }
+        },
+        {
+          "address": "blackaf10uugwvyurljmp5w99y6k5m8z0we3qqwzl89quk",
+          "coins": [
+            {
+              "denom": "ufury",
+              "amount": "200000000000"
+            }
+          ]
+        },
+        {
+          "address": "blackaf1tkzx82jruvsuakr7mxspa9pp0d2um7jgvxtq6y",
+          "coins": [
+            {
+              "denom": "ufury",
+              "amount": "200000000000"
+            }
+          ]
+        },
+        {
+          "address": "blackaf1pykq2ah3e4zkz9mcsnxwl2sdhk0m8duwc5jw84",
+          "coins": [
+            {
+              "denom": "ufury",
+              "amount": "200000000000"
+            }
+          ]
+        },
+        {
+          "address": "blackaf1amzmu9l8zf46n2d7dw66x0qzwlndjw7qrw9msc",
+          "coins": [
+            {
+              "denom": "ufury",
+              "amount": "200000000000"
+            }
+          ]
+        },
+        {
+          "address": "blackaf1qtwt5kmc9p8v2eu8m9akk9c03u272k0p22yedn",
+          "coins": [
+            {
+              "denom": "ufury",
+              "amount": "200000000000"
+            }
+          ]
+        },
+        
       ],
       "supply": [],
       "denom_metadata": []
@@ -72,20 +154,20 @@
       "params": {
         "fee": "0.003000000000000000",
         "pool_creation_fee": {
-          "denom": "stake",
+          "denom": "ufury",
           "amount": "5000"
         },
         "tax_rate": "0.400000000000000000",
         "unilateral_liquidity_fee": "0.002000000000000000"
       },
-      "standard_denom": "stake",
+      "standard_denom": "ufury",
       "pool": [],
       "sequence": "1"
     },
     "crisis": {
       "constant_fee": {
-        "denom": "stake",
-        "amount": "1000"
+        "denom": "ufury",
+        "amount": "100000"
       }
     },
     "distribution": {
@@ -144,7 +226,7 @@
     "farm": {
       "params": {
         "pool_creation_fee": {
-          "denom": "stake",
+          "denom": "ufury",
           "amount": "5000"
         },
         "max_reward_categories": 2,
@@ -181,14 +263,14 @@
       "deposit_params": {
         "min_deposit": [
           {
-            "denom": "stake",
+            "denom": "ufury",
             "amount": "10000000"
           }
         ],
-        "max_deposit_period": "172800s"
+        "max_deposit_period": "1728s"
       },
       "voting_params": {
-        "voting_period": "172800s"
+        "voting_period": "1728s"
       },
       "tally_params": {
         "quorum": "0.334000000000000000",
@@ -265,7 +347,7 @@
         "inflation_base": "2000000000000000"
       },
       "params": {
-        "mint_denom": "stake",
+        "mint_denom": "ufury",
         "inflation": "0.040000000000000000"
       }
     },
@@ -292,8 +374,8 @@
         "min_deposit_multiple": "1000",
         "min_deposit": [
           {
-            "denom": "stake",
-            "amount": "5000"
+            "denom": "ufury",
+            "amount": "500000"
           }
         ],
         "service_fee_tax": "0.050000000000000000",
@@ -301,7 +383,7 @@
         "complaint_retrospect": "1296000s",
         "arbitration_time_limit": "432000s",
         "tx_size_limit": "4000",
-        "base_denom": "stake",
+        "base_denom": "ufury",
         "restricted_service_fee_denom": false
       },
       "definitions": [],
@@ -326,7 +408,7 @@
         "max_validators": 100,
         "max_entries": 7,
         "historical_entries": 10000,
-        "bond_denom": "stake",
+        "bond_denom": "ufury",
         "min_commission_rate": "0.000000000000000000"
       },
       "last_total_power": "0",
@@ -362,7 +444,7 @@
         "token_tax_rate": "0.400000000000000000",
         "issue_token_base_fee": {
           "denom": "fury",
-          "amount": "60000"
+          "amount": "6000"
         },
         "mint_token_fee_ratio": "0.100000000000000000"
       },
