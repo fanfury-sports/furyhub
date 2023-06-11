@@ -1,5 +1,5 @@
-KEY="mykey"
-KEY2="mykey2"
+KEY="samael"
+KEY2="samael2"
 CHAINID="highbury_710-1"
 MONIKER="samael"
 KEYRING="test"
