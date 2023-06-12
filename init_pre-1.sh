@@ -1,26 +1,22 @@
 export KEY1="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
 # 
-export KEY2="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+export KEY2="guard cream sadness conduct invite crumble clock pudding hole grit liar hotel maid produce squeeze return argue turtle know drive eight casino maze host"
 # 
-export KEY3="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+export KEY3="fuel obscure melt april direct second usual hair leave hobby beef bacon solid drum used law mercy worry fat super must ritual bring faculty"
 # 
-export KEY4="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+export KEY4="smooth bike pool jealous cinnamon seat tiger team canoe almost core bag fluid garbage embrace gorilla wise door toe upon present canal myth corn"
 # 
-export KEY5="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+export KEY5="whisper,hole,destroy,concert,shift,faculty,media,bridge,pizza,achieve,raven,sweet history lock universe second crumble clock pudding super must ritual"
 # 
-export KEY6="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+export KEY6="choice give picture midnight tower jewel reunion cruise history lock universe second connect employ deny poem extend shoe design siren dose dream fault opinion"
 # 
-
-
-
-export USER_1="guard cream sadness conduct invite crumble clock pudding hole grit liar hotel maid produce squeeze return argue turtle know drive eight casino maze host"
-# cre185fflsvwrz0cx46w6qada7mdy92m6kx4vg42xf
-export USER_2="fuel obscure melt april direct second usual hair leave hobby beef bacon solid drum used law mercy worry fat super must ritual bring faculty"
-# cre10n3ncmlsaqfuwsmfll8kq6hvt4x7c8czhnv69a
-export USER_3="smooth bike pool jealous cinnamon seat tiger team canoe almost core bag fluid garbage embrace gorilla wise door toe upon present canal myth corn"
-export VALIDATOR_1_GENESIS_COINS=100000000000000000stake,10000000000uatom,10000000000uusd
-export USER_1_GENESIS_COINS=10000000000stake,10000000000uatom,10000000000uusd
-export USER_2_GENESIS_COINS=10000000000stake,10000000000pool1,10000000000pool2,10000000000pool3,10000000000pool4
+export VALIDATOR_1_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY1_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY2_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY3_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY4_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY5_GENESIS_COINS=100000000000000000stake,200000000000ufury
+export KEY6_GENESIS_COINS=100000000000000000stake,200000000000ufury
 
 KEY1="samael"
 KEY2="pandora"
