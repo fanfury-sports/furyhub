@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 KEY="atreus"
 KEY2="atreus2"
 CHAINID="fanfury-1"
 MONIKER="atreus"
+=======
+KEY="samael"
+KEY2="samael2"
+CHAINID="fanfury_4200-1"
+MONIKER="samael"
+>>>>>>> b2cf971b (commit)
 KEYRING="test"
 KEYALGO="secp256k1"
 LOGLEVEL="info"
