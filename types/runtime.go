@@ -36,7 +36,7 @@ func init() {
 
 	NativeToken = tokenv1.Token{
 		Symbol:        "fury",
-		Name:          "Furyhub staking token",
+		Name:          "Furyhub Staking token",
 		Scale:         6,
 		MinUnit:       "ufury",
 		InitialSupply: 212000000,
@@ -47,11 +47,11 @@ func init() {
 
 	// TODO
 	EvmToken = tokenv1.Token{
-		Symbol:        "efury",
-		Name:          "Furyhub evm token",
+		Symbol:        "afury",
+		Name:          "Furyhub EVM token",
 		Scale:         18,
-		MinUnit:       "wefury",
-		InitialSupply: 0,
+		MinUnit:       "wafury",
+		InitialSupply: 212000000,
 		MaxSupply:     math.MaxUint64,
 		Mintable:      true,
 		Owner:         sdk.AccAddress(crypto.AddressHash([]byte(tokentypes.ModuleName))).String(),
