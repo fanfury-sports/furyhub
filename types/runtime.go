@@ -51,7 +51,7 @@ func init() {
 		Name:          "Furyhub EVM token",
 		Scale:         18,
 		MinUnit:       "wafury",
-		InitialSupply: ,
+		InitialSupply: 212000000,
 		MaxSupply:     math.MaxUint64,
 		Mintable:      true,
 		Owner:         sdk.AccAddress(crypto.AddressHash([]byte(tokentypes.ModuleName))).String(),
