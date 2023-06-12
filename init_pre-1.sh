@@ -1,13 +1,42 @@
-KEY="samael"
+export KEY1="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+export KEY2="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+export KEY3="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+export KEY4="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+export KEY5="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+export KEY6="struggle panic room apology luggage game screen wing want lazy famous eight robot picture wrap act uphold grab away proud music danger naive opinion"
+# 
+
+
+
+export USER_1="guard cream sadness conduct invite crumble clock pudding hole grit liar hotel maid produce squeeze return argue turtle know drive eight casino maze host"
+# cre185fflsvwrz0cx46w6qada7mdy92m6kx4vg42xf
+export USER_2="fuel obscure melt april direct second usual hair leave hobby beef bacon solid drum used law mercy worry fat super must ritual bring faculty"
+# cre10n3ncmlsaqfuwsmfll8kq6hvt4x7c8czhnv69a
+export USER_3="smooth bike pool jealous cinnamon seat tiger team canoe almost core bag fluid garbage embrace gorilla wise door toe upon present canal myth corn"
+export VALIDATOR_1_GENESIS_COINS=100000000000000000stake,10000000000uatom,10000000000uusd
+export USER_1_GENESIS_COINS=10000000000stake,10000000000uatom,10000000000uusd
+export USER_2_GENESIS_COINS=10000000000stake,10000000000pool1,10000000000pool2,10000000000pool3,10000000000pool4
+
+KEY1="samael"
 KEY2="pandora"
 KEY3="orion"
 KEY4="ares"
 KEY5="jinx"
 KEY6="atreus"
 CHAINID="fanfury_4200-1"
-MONIKER="samael"
+MONIKER1="samael"
+MONIKER2="padora"
+MONIKER3"orion"
+MONIKER4="ares"
+MONIKER5="jinx"
+MONIKER6="atreus"
 KEYRING="test"
-KEYALGO="secp256k1"
+KEYALGO="eth_secp256k1"
 LOGLEVEL="info"
 # to trace evm
 #TRACE="--trace"
@@ -21,12 +50,16 @@ rm -rf ~/.fury*
 make install
 
 # Set client config
-fury config keyring-backend $KEYRING
+fury config keyring-backend $KEY1RING
 fury config chain-id $CHAINID
 
-# if $KEY exists it should be deleted
-fury keys add $KEY --keyring-backend $KEYRING --algo $KEYALGO
-fury keys add $KEY2 --keyring-backend $KEYRING --algo $KEYALGO
+# if $KEY1 exists it should be deleted
+fury keys add $KEY1 --keyring-backend $KEY1RING --algo $KEY1ALGO
+fury keys add $KEY2 --keyring-backend $KEY1RING --algo $KEY1ALGO
+fury keys add $KEY3 --keyring-backend $KEY1RING --algo $KEY1ALGO
+fury keys add $KEY4 --keyring-backend $KEY1RING --algo $KEY1ALGO
+fury keys add $KEY5 --keyring-backend $KEY1RING --algo $KEY1ALGO
+fury keys add $KEY6 --keyring-backend $KEY1RING --algo $KEY1ALGO
 
 # Set moniker and chain-id for Black (Moniker can be anything, chain-id must be an integer)
 fury init $MONIKER --chain-id $CHAINID
@@ -74,7 +107,12 @@ if [[ $1 == "pending" ]]; then
 fi
 
 # Allocate genesis accounts (cosmos formatted addresses)
-fury add-genesis-account $KEY 200000000000ufury --keyring-backend $KEYRING
+fury add-genesis-account $KEY1 200000000000ufury --keyring-backend $KEY1RING
+fury add-genesis-account $KEY2 200000000000ufury --keyring-backend $KEY1RING
+fury add-genesis-account $KEY3 200000000000ufury --keyring-backend $KEY1RING
+fury add-genesis-account $KEY4 200000000000ufury --keyring-backend $KEY1RING
+fury add-genesis-account $KEY5 200000000000ufury --keyring-backend $KEY1RING
+fury add-genesis-account $KEY6 200000000000ufury --keyring-backend $KEY1RING
 
                               
 # Investors
@@ -280,11 +318,11 @@ fury add-genesis-account blackaf1w4v0tjfpfqrncl3mh8ezmceyjfjnnukzz0h082 12729000
 # Bc is required to add this big numbers
 # total_supply=$(bc <<< "$amount_to_claim+$validators_supply")
 
-echo $KEYRING
-echo $KEY
+echo $KEY1RING
+echo $KEY1
 # Sign genesis transaction
-fury gentx $KEY 2000000000ufury --keyring-backend $KEYRING --chain-id $CHAINID
-#fury gentx $KEY2 1000000000000000000000ufury --keyring-backend $KEYRING --chain-id $CHAINID
+fury gentx $KEY1 2000000000ufury --keyring-backend $KEY1RING --chain-id $CHAINID
+#fury gentx $KEY2 1000000000000000000000ufury --keyring-backend $KEY1RING --chain-id $CHAINID
 
 # Collect genesis tx
 fury collect-gentxs
