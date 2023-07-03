@@ -87,9 +87,7 @@ print-path:
 print-paths:
 	@echo "build $(BUILD_DIR)\nbin $(BIN_DIR)\ncache $(BUILD_CACHE_DIR)\nout $(OUT_DIR)"
 
-.PHONY: clean
-clean:
-	@rm -rf $(BIN_DIR) $(BUILD_CACHE_DIR) $(OUT_DIR)
+
 
 ################################################################################
 ###                             Dev Setup                                    ###
