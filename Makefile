@@ -1,104 +1,23 @@
-################################################################################
-###                             Project Info                                 ###
-################################################################################
-PROJECT_NAME := fury# unique namespace for project
+#!/usr/bin/make -f
 
-GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-GIT_COMMIT := $(shell git rev-parse HEAD)
-GIT_COMMIT_SHORT := $(shell git rev-parse --short HEAD)
-
-BRANCH_PREFIX := $(shell echo $(GIT_BRANCH) | sed 's/\/.*//g')# eg release, master, feat
-
-EXACT_TAG := $(shell git describe --tags --exact-match 2> /dev/null)
-RECENT_TAG := $(shell git describe --tags)
-
-ifeq ($(BRANCH_PREFIX), release)
-# we are on a release branch, set version to the last or current tag
-VERSION := $(RECENT_TAG)# use current tag or most recent tag + number of commits + g + abbrivated commit
-VERSION_NUMBER := $(shell echo $(VERSION) | sed 's/^v//')# drop the "v" prefix for versions
-else ifeq ($(EXACT_TAG), $(RECENT_TAG))
-# we have a tag checked out directly
-VERSION := $(RECENT_TAG)# use exact tag
-VERSION_NUMBER := $(shell echo $(VERSION) | sed 's/^v//')# drop the "v" prefix for versions
-else
-# we are not on a release branch, and do not have clean tag history (etc v0.19.0-xx-gxx will not make sense to use)
-VERSION := $(GIT_COMMIT_SHORT)
-VERSION_NUMBER := $(VERSION)
-endif
-
-TENDERMINT_VERSION := $(shell go list -m github.com/tendermint/tendermint | sed 's:.* ::')
-COSMOS_SDK_VERSION := $(shell go list -m github.com/cosmos/cosmos-sdk | sed 's:.* ::')
-
-.PHONY: print-git-info
-print-git-info:
-	@echo "branch $(GIT_BRANCH)\nbranch_prefix $(BRANCH_PREFIX)\ncommit $(GIT_COMMIT)\ncommit_short $(GIT_COMMIT_SHORT)"
-
-.PHONY: print-version
-print-version:
-	@echo "fury $(VERSION)\ntendermint $(TENDERMINT_VERSION)\ncosmos $(COSMOS_SDK_VERSION)"
-
-################################################################################
-###                             Project Settings                             ###
-################################################################################
+PACKAGES_SIMTEST=$(shell go list ./... | grep '/simulation')
+PACKAGES_UNITTEST=$(shell go list ./... | grep -v '/simulation' | grep -v '/cli_test')
+VERSION := $(shell echo $(shell git describe --tags) | sed 's/^v//')
+COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
-DOCKER:=docker
-DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace bufbuild/buf
-HTTPS_GIT := https://github.com/Incubus-Network/fury.git
+BINDIR ?= $(GOPATH)/bin
+SDK_PACK := $(shell go list -m github.com/cosmos/cosmos-sdk | sed  's/ /\@/g')
+NetworkType := $(shell if [ -z ${NetworkType} ]; then echo "mainnet"; else echo ${NetworkType}; fi)
+CURRENT_DIR = $(shell pwd)
+PROJECT_NAME = $(shell git remote get-url origin | xargs basename -s .git)
 
-################################################################################
-###                             Machine Info                                 ###
-################################################################################
-OS_FAMILY := $(shell uname -s)
-MACHINE := $(shell uname -m)
-
-NATIVE_GO_OS := $(shell echo $(OS_FAMILY) | tr '[:upper:]' '[:lower:]')# Linux -> linux, Darwin -> darwin
-
-NATIVE_GO_ARCH := $(MACHINE)
-ifeq ($(MACHINE),x86_64)
-NATIVE_GO_ARCH := amd64# x86_64 -> amd64
-endif
-ifeq ($(MACHINE),aarch64)
-NATIVE_GO_ARCH := arm64# aarch64 -> arm64
-endif
-
-TARGET_GO_OS ?= $(NATIVE_GO_OS)
-TARGET_GO_ARCH ?= $(NATIVE_GO_ARCH)
-.PHONY: print-machine-info
-print-machine-info:
-	@echo "platform $(NATIVE_GO_OS)/$(NATIVE_GO_ARCH)"
-	@echo "target $(TARGET_GO_OS)/$(TARGET_GO_ARCH)"
-
-################################################################################
-###                             PATHS                                        ###
-################################################################################
-BUILD_DIR := build# build files
-BIN_DIR := $(BUILD_DIR)/bin# for binary dev dependencies
-BUILD_CACHE_DIR := $(BUILD_DIR)/.cache# caching for non-artifact outputs
-OUT_DIR := out# for artifact intermediates and outputs
-
-ROOT_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))# absolute path to root
-export PATH := $(ROOT_DIR)/$(BIN_DIR):$(PATH)# add local bin first in path
-
-.PHONY: print-path
-print-path:
-	@echo $(PATH)
-
-.PHONY: print-paths
-print-paths:
-	@echo "build $(BUILD_DIR)\nbin $(BIN_DIR)\ncache $(BUILD_CACHE_DIR)\nout $(OUT_DIR)"
-
-
-
-################################################################################
-###                             Dev Setup                                    ###
-################################################################################
-# include $(BUILD_DIR)/deps.mk
-
-# include $(BUILD_DIR)/proto.mk
-# include $(BUILD_DIR)/proto-deps.mk
+# default mainnet EVM_CHAIN_ID
+EVM_CHAIN_ID ?= 6688
 
 export GO111MODULE = on
+
 # process build tags
+
 build_tags = netgo
 ifeq ($(LEDGER_ENABLED),true)
   ifeq ($(OS),Windows_NT)
@@ -123,13 +42,11 @@ ifeq ($(LEDGER_ENABLED),true)
   endif
 endif
 
-ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
+ifeq ($(WITH_CLEVELDB),yes)
   build_tags += gcc
 endif
-
-ifeq (secp,$(findstring secp,$(COSMOS_BUILD_OPTIONS)))
-  build_tags += libsecp256k1_sdk
-endif
+build_tags += $(BUILD_TAGS)
+build_tags := $(strip $(build_tags))
 
 whitespace :=
 whitespace += $(whitespace)
@@ -138,110 +55,55 @@ build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 
 # process linker flags
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=fury \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=fury \
-		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION_NUMBER) \
-		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(GIT_COMMIT) \
-		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)" \
-		  -X github.com/tendermint/tendermint/version.TMCoreSemVer=$(TENDERMINT_VERSION)
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=iris \
+		  -X github.com/cosmos/cosmos-sdk/version.AppName=iris \
+		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
+		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
+		  -X github.com/irisnet/irishub/types.EIP155ChainID=$(EVM_CHAIN_ID) \
+		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
-# DB backend selection
-ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
+ifeq ($(WITH_CLEVELDB),yes)
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-endif
-ifeq (badgerdb,$(findstring badgerdb,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=badgerdb
-  BUILD_TAGS += badgerdb
-endif
-# handle rocksdb
-ifeq (rocksdb,$(findstring rocksdb,$(COSMOS_BUILD_OPTIONS)))
-  CGO_ENABLED=1
-  BUILD_TAGS += rocksdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
-endif
-# handle boltdb
-ifeq (boltdb,$(findstring boltdb,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_TAGS += boltdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=boltdb
-endif
-
-ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -w -s
 endif
 ldflags += $(LDFLAGS)
 ldflags := $(strip $(ldflags))
 
-build_tags += $(BUILD_TAGS)
-build_tags := $(strip $(build_tags))
-
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
-# check for nostrip option
-ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_FLAGS += -trimpath
+
+# The below include contains the tools target.
+
+all: tools install lint
+
+# The below include contains the tools.
+include contrib/devtools/Makefile
+
+build: check-evm-chain-id go.sum
+ifeq ($(OS),Windows_NT)
+	@go build $(BUILD_FLAGS) -o build/iris.exe ./cmd/iris
+else
+	@go build $(BUILD_FLAGS) -o build/iris ./cmd/iris
 endif
 
-###############################################################################
-###                                  Build                                  ###
-###############################################################################
+build-linux: check-evm-chain-id go.sum
+	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
 
-BUILD_TARGETS := build install
+build-all-binary: check-evm-chain-id go.sum
+	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/iris-linux-amd64 ./cmd/iris
+	LEDGER_ENABLED=false GOOS=linux GOARCH=arm64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/iris-linux-arm64 ./cmd/iris
+	LEDGER_ENABLED=false GOOS=windows GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/iris-windows-amd64.exe ./cmd/iris
 
-build: BUILD_ARGS=-o $(BUILDDIR)/
-build-linux:
-	GOOS=linux GOARCH=amd64 LEDGER_ENABLED=false $(MAKE) build
+build-contract-tests-hooks:
+ifeq ($(OS),Windows_NT)
+	go build -mod=readonly $(BUILD_FLAGS) -o build/contract_tests.exe ./cmd/contract_tests
+else
+	go build -mod=readonly $(BUILD_FLAGS) -o build/contract_tests ./cmd/contract_tests
+endif
 
-$(BUILD_TARGETS): go.sum $(BUILDDIR)/
-	go $@ $(BUILD_FLAGS) $(BUILD_ARGS) ./...
+install: check-evm-chain-id go.sum
+	@go install $(BUILD_FLAGS) ./cmd/iris
 
-$(BUILDDIR)/:
-	mkdir -p $(BUILDDIR)/
-
-build-reproducible: go.sum
-	$(DOCKER) rm latest-build || true
-	$(DOCKER) run --volume=$(CURDIR):/sources:ro \
-        --env TARGET_PLATFORMS='linux/amd64' \
-        --env APP=black \
-        --env VERSION=$(VERSION) \
-        --env COMMIT=$(COMMIT) \
-        --env CGO_ENABLED=1 \
-        --env LEDGER_ENABLED=$(LEDGER_ENABLED) \
-        --name latest-build tendermintdev/rbuilder:latest
-	$(DOCKER) cp -a latest-build:/home/builder/artifacts/ $(CURDIR)/
-
-
-build-docker:
-	# TODO replace with kaniko
-	$(DOCKER) build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
-	$(DOCKER) tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
-	# docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${COMMIT_HASH}
-	# update old container
-	$(DOCKER) rm black || true
-	# create a new container from the latest image
-	$(DOCKER) create --name black -t -i ${DOCKER_IMAGE}:latest black
-	# move the binaries to the ./build directory
-	mkdir -p ./build/
-	$(DOCKER) cp black:/usr/bin/black ./build/
-
-push-docker: build-docker
-	$(DOCKER) push ${DOCKER_IMAGE}:${DOCKER_TAG}
-	$(DOCKER) push ${DOCKER_IMAGE}:latest
-
-$(MOCKS_DIR):
-	mkdir -p $(MOCKS_DIR)
-
-distclean: clean tools-clean
-
-clean:
-	rm -rf \
-    $(BUILDDIR)/ \
-    artifacts/ \
-    tmp-swagger-gen/
-
-all: build
-
-build-all: tools build lint test
-
-.PHONY: distclean clean build-all
+check-evm-chain-id:
+	@echo "note: EVM_CHAIN_ID is $(EVM_CHAIN_ID)"
 
 ###############################################################################
 ###                          Tools & Dependencies                           ###
@@ -259,12 +121,12 @@ RUNSIM         = $(TOOLS_DESTDIR)/runsim
 runsim: $(RUNSIM)
 $(RUNSIM):
 	@echo "Installing runsim..."
-	@go get github.com/cosmos/tools/cmd/runsim@master)
+	@go get github.com/cosmos/tools/cmd/runsim@master
 
 statik: $(STATIK)
 $(STATIK):
 	@echo "Installing statik..."
-	@go get github.com/rakyll/statik@v0.1.6)
+	@go get github.com/rakyll/statik@v0.1.6
 
 docs-tools:
 ifeq (, $(shell which yarn))
@@ -297,14 +159,6 @@ go.sum: go.mod
 	echo "Ensure dependencies have not been modified ..." >&2
 	go mod verify
 	go mod tidy
-
-########################################
-### Tools & dependencies
-
-go-mod-cache: go.sum
-	@echo "--> Download go modules to local cache"
-	@go mod download
-PHONY: go-mod-cache
 
 
 ########################################
@@ -379,6 +233,77 @@ build-docs-versioned:
 	done < versions ;
 
 .PHONY: docs-serve build-docs build-docs-versioned
+
+###############################################################################
+###                                Protobuf                                 ###
+###############################################################################
+
+containerProtoVer=v0.2
+containerProtoImage=tendermintdev/sdk-proto-gen:$(containerProtoVer)
+containerProtoGen=cosmos-sdk-proto-gen-$(containerProtoVer)
+containerProtoGenSwagger=cosmos-sdk-proto-gen-swagger-$(containerProtoVer)
+containerProtoFmt=cosmos-sdk-proto-fmt-$(containerProtoVer)
+
+proto-all: proto-format proto-lint proto-gen
+
+proto-gen:
+	@echo "Generating Protobuf files"
+	$(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace tendermintdev/sdk-proto-gen sh ./scripts/protocgen.sh
+
+proto-swagger-gen:
+	@echo "Generating Protobuf Swagger"
+	@./scripts/protoc-swagger-gen.sh
+
+proto-format:
+	@echo "Formatting Protobuf files"
+	find ./ -not -path "./third_party/*" -name *.proto -exec clang-format -i {} \;
+
+proto-lint:
+	@$(DOCKER_BUF) lint --error-format=json
+
+proto-check-breaking:
+	@$(DOCKER_BUF) breaking --against $(HTTPS_GIT)#branch=main
+
+
+TM_URL              = https://raw.githubusercontent.com/tendermint/tendermint/v0.34.15/proto/tendermint
+GOGO_PROTO_URL      = https://raw.githubusercontent.com/regen-network/protobuf/cosmos
+COSMOS_SDK_URL      = https://raw.githubusercontent.com/cosmos/cosmos-sdk/v0.45.1
+ETHERMINT_URL      	= https://raw.githubusercontent.com/Black-Network/ethermint-v2/v0.10.0
+IBC_GO_URL      		= https://raw.githubusercontent.com/cosmos/ibc-go/v3.0.0-rc0
+COSMOS_PROTO_URL    = https://raw.githubusercontent.com/regen-network/cosmos-proto/master
+
+TM_CRYPTO_TYPES     = third_party/proto/tendermint/crypto
+TM_ABCI_TYPES       = third_party/proto/tendermint/abci
+TM_TYPES            = third_party/proto/tendermint/types
+
+GOGO_PROTO_TYPES    = third_party/proto/gogoproto
+
+COSMOS_PROTO_TYPES  = third_party/proto/cosmos_proto
+
+proto-update-deps:
+	@mkdir -p $(GOGO_PROTO_TYPES)
+	@curl -sSL $(GOGO_PROTO_URL)/gogoproto/gogo.proto > $(GOGO_PROTO_TYPES)/gogo.proto
+
+	@mkdir -p $(COSMOS_PROTO_TYPES)
+	@curl -sSL $(COSMOS_PROTO_URL)/cosmos.proto > $(COSMOS_PROTO_TYPES)/cosmos.proto
+
+## Importing of tendermint protobuf definitions currently requires the
+## use of `sed` in order to build properly with cosmos-sdk's proto file layout
+## (which is the standard Buf.build FILE_LAYOUT)
+## Issue link: https://github.com/tendermint/tendermint/issues/5021
+	@mkdir -p $(TM_ABCI_TYPES)
+	@curl -sSL $(TM_URL)/abci/types.proto > $(TM_ABCI_TYPES)/types.proto
+
+	@mkdir -p $(TM_TYPES)
+	@curl -sSL $(TM_URL)/types/types.proto > $(TM_TYPES)/types.proto
+
+	@mkdir -p $(TM_CRYPTO_TYPES)
+	@curl -sSL $(TM_URL)/crypto/proof.proto > $(TM_CRYPTO_TYPES)/proof.proto
+	@curl -sSL $(TM_URL)/crypto/keys.proto > $(TM_CRYPTO_TYPES)/keys.proto
+
+
+
+.PHONY: proto-all proto-gen proto-gen-any proto-swagger-gen proto-format proto-lint proto-check-breaking proto-update-deps
 
 ###############################################################################
 ###                                Localnet                                 ###
