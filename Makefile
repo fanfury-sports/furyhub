@@ -105,15 +105,7 @@ install: check-evm-chain-id go.sum
 check-evm-chain-id:
 	@echo "note: EVM_CHAIN_ID is $(EVM_CHAIN_ID)"
 
-update-swagger-docs: statik proto-swagger-gen
-	$(BINDIR)/statik -src=lite/swagger-ui -dest=lite -f -m
-	@if [ -n "$(git status --porcelain)" ]; then \
-        echo "\033[91mSwagger docs are out of sync!!!\033[0m";\
-        exit 1;\
-    else \
-    	echo "\033[92mSwagger docs are in sync\033[0m";\
-    fi
-.PHONY: update-swagger-docs
+
 
 ###############################################################################
 ###                          Tools & Dependencies                           ###
