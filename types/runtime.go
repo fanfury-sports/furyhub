@@ -50,7 +50,7 @@ func init() {
 		Symbol:        "afury",
 		Name:          "Furyhub EVM token",
 		Scale:         18,
-		MinUnit:       "wafury",
+		MinUnit:       "afury",
 		InitialSupply: 212000000,
 		MaxSupply:     math.MaxUint64,
 		Mintable:      true,
