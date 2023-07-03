@@ -94,10 +94,10 @@ clean:
 ################################################################################
 ###                             Dev Setup                                    ###
 ################################################################################
-include $(BUILD_DIR)/deps.mk
+# include $(BUILD_DIR)/deps.mk
 
-include $(BUILD_DIR)/proto.mk
-include $(BUILD_DIR)/proto-deps.mk
+# include $(BUILD_DIR)/proto.mk
+# include $(BUILD_DIR)/proto-deps.mk
 
 #export GO111MODULE = on
 # process build tags
