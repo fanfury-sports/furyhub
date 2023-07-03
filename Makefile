@@ -75,7 +75,7 @@ BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
 all: tools install lint
 
 # The below include contains the tools.
-include contrib/devtools/Makefile
+# include contrib/devtools/Makefile
 
 build: check-evm-chain-id go.sum
 ifeq ($(OS),Windows_NT)
@@ -105,37 +105,103 @@ install: check-evm-chain-id go.sum
 check-evm-chain-id:
 	@echo "note: EVM_CHAIN_ID is $(EVM_CHAIN_ID)"
 
-update-swagger-docs: statik proto-swagger-gen
-	$(BINDIR)/statik -src=lite/swagger-ui -dest=lite -f -m
+###############################################################################
+###                          Tools & Dependencies                           ###
+###############################################################################
+
+TOOLS_DESTDIR  ?= $(GOPATH)/bin
+STATIK         = $(TOOLS_DESTDIR)/statik
+RUNSIM         = $(TOOLS_DESTDIR)/runsim
+
+# Install the runsim binary with a temporary workaround of entering an outside
+# directory as the "go get" command ignores the -mod option and will polute the
+# go.{mod, sum} files.
+#
+# ref: https://github.com/golang/go/issues/30515
+runsim: $(RUNSIM)
+$(RUNSIM):
+	@echo "Installing runsim..."
+	@${GO_MOD} go get github.com/cosmos/tools/cmd/runsim@master
+
+statik: $(STATIK)
+$(STATIK):
+	@echo "Installing statik..."
+	@go get github.com/rakyll/statik@v0.1.6
+
+
+docs-tools:
+ifeq (, $(shell which yarn))
+	@echo "Installing yarn..."
+	@npm install -g yarn
+else
+	@echo "yarn already installed; skipping..."
+endif
+
+tools: tools-stamp
+tools-stamp: docs-tools proto-tools statik runsim
+	# Create dummy file to satisfy dependency and avoid
+	# rebuilding when this Makefile target is hit twice
+	# in a row.
+	touch $@
+
+tools-clean:
+	rm -f $(RUNSIM)
+	rm -f tools-stamp
+
+docs-tools-stamp: docs-tools
+	# Create dummy file to satisfy dependency and avoid
+	# rebuilding when this Makefile target is hit twice
+	# in a row.
+	touch $@
+
+.PHONY: runsim statik tools docs-tools proto-tools  tools-stamp tools-clean docs-tools-stamp
+
+
+###############################################################################
+###                              Documentation                              ###
+###############################################################################
+
+update-swagger-docs: statik
+	$(BINDIR)/statik -src=client/docs/swagger-ui -dest=client/docs -f -m
 	@if [ -n "$(git status --porcelain)" ]; then \
         echo "\033[91mSwagger docs are out of sync!!!\033[0m";\
         exit 1;\
     else \
-    	echo "\033[92mSwagger docs are in sync\033[0m";\
+        echo "\033[92mSwagger docs are in sync\033[0m";\
     fi
 .PHONY: update-swagger-docs
 
-########################################
-### Tools & dependencies
+godocs:
+	@echo "--> Wait a few seconds and visit http://localhost:6060/pkg/github.com/merlin-network/black-fury/types"
+	godoc -http=:6060
 
-go-mod-cache: go.sum
-	@echo "--> Download go modules to local cache"
-	@go mod download
+# Start docs site at localhost:8080
+docs-serve:
+	@cd docs && \
+	yarn && \
+	yarn run serve
 
-go.sum: go.mod
-	@echo "--> Ensure dependencies have not been modified"
-	@go mod verify
+# Build the site into docs/.vuepress/dist
+build-docs:
+	@$(MAKE) docs-tools-stamp && \
+	cd docs && \
+	yarn && \
+	yarn run build
 
-draw-deps:
-	@# requires brew install graphviz or apt-get install graphviz
-	go get github.com/RobotsAndPencils/goviz
-	@goviz -i ./cmd/fury -d 2 | dot -Tpng -o dependency-graph.png
+# This builds a docs site for each branch/tag in `./docs/versions`
+# and copies each site to a version prefixed path. The last entry inside
+# the `versions` file will be the default root index.html.
+build-docs-versioned:
+	@$(MAKE) docs-tools-stamp && \
+	cd docs && \
+	while read -r branch path_prefix; do \
+		(git checkout $${branch} && npm install && VUEPRESS_BASE="/$${path_prefix}/" npm run build) ; \
+		mkdir -p ~/output/$${path_prefix} ; \
+		cp -r .vuepress/dist/* ~/output/$${path_prefix}/ ; \
+		cp ~/output/$${path_prefix}/index.html ~/output ; \
+	done < versions ;
 
-clean:
-	rm -rf snapcraft-local.yaml build/ tmp-swagger-gen/
-
-distclean: clean
-	rm -rf vendor/
+.PHONY: docs-serve build-docs build-docs-versioned
 
 ###############################################################################
 ###                                Protobuf                                 ###

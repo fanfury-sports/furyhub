@@ -32,30 +32,16 @@ require (
 
 require (
 	cloud.google.com/go/compute/metadata v0.2.1 // indirect
-	github.com/RobotsAndPencils/goviz v0.0.0-20161006195526-3924fe917ccd // indirect
-	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/btcsuite/btcd/chaincfg/chainhash v1.0.1 // indirect
 	github.com/btcsuite/btcutil v1.0.3-0.20201208143702-a53e38424cce // indirect
-	github.com/client9/misspell v0.3.4 // indirect
 	github.com/cosmos/gogoproto v1.4.3 // indirect
 	github.com/dlclark/regexp2 v1.4.1-0.20201116162257-a2a8dda75c91 // indirect
 	github.com/dop251/goja v0.0.0-20220405120441-9037c2b61cbf // indirect
-	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
-	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
-	github.com/gordonklaus/ineffassign v0.0.0-20230610083614-0e73809eb601 // indirect
-	github.com/jessevdk/go-flags v1.4.0 // indirect
-	github.com/kisielk/errcheck v1.6.3 // indirect
-	github.com/mdempsky/unconvert v0.0.0-20230125054757-2661c2c99a9b // indirect
-	github.com/nicksnyder/go-i18n v1.10.1 // indirect
-	github.com/tendermint/lint v0.0.1 // indirect
+	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/tidwall/btree v1.5.0 // indirect
 	github.com/zondax/ledger-go v0.14.1 // indirect
-	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/tools v0.9.3 // indirect
-	gopkg.in/alecthomas/gometalinter.v2 v2.0.12 // indirect
-	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20191105091915-95d230a53780 // indirect
-	mvdan.cc/unparam v0.0.0-20230610194454-9ea02bef9868 // indirect
 )
 
 require (
@@ -206,7 +192,7 @@ require (
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/api v0.102.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.30.0
+	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
