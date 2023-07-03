@@ -1,106 +1,23 @@
-################################################################################
-###                             Project Info                                 ###
-################################################################################
-PROJECT_NAME := fury# unique namespace for project
+#!/usr/bin/make -f
 
-GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-GIT_COMMIT := $(shell git rev-parse HEAD)
-GIT_COMMIT_SHORT := $(shell git rev-parse --short HEAD)
-
-BRANCH_PREFIX := $(shell echo $(GIT_BRANCH) | sed 's/\/.*//g')# eg release, master, feat
-
-EXACT_TAG := $(shell git describe --tags --exact-match 2> /dev/null)
-RECENT_TAG := $(shell git describe --tags)
-
-ifeq ($(BRANCH_PREFIX), release)
-# we are on a release branch, set version to the last or current tag
-VERSION := $(RECENT_TAG)# use current tag or most recent tag + number of commits + g + abbrivated commit
-VERSION_NUMBER := $(shell echo $(VERSION) | sed 's/^v//')# drop the "v" prefix for versions
-else ifeq ($(EXACT_TAG), $(RECENT_TAG))
-# we have a tag checked out directly
-VERSION := $(RECENT_TAG)# use exact tag
-VERSION_NUMBER := $(shell echo $(VERSION) | sed 's/^v//')# drop the "v" prefix for versions
-else
-# we are not on a release branch, and do not have clean tag history (etc v0.19.0-xx-gxx will not make sense to use)
-VERSION := $(GIT_COMMIT_SHORT)
-VERSION_NUMBER := $(VERSION)
-endif
-
-TENDERMINT_VERSION := $(shell go list -m github.com/tendermint/tendermint | sed 's:.* ::')
-COSMOS_SDK_VERSION := $(shell go list -m github.com/cosmos/cosmos-sdk | sed 's:.* ::')
-
-.PHONY: print-git-info
-print-git-info:
-	@echo "branch $(GIT_BRANCH)\nbranch_prefix $(BRANCH_PREFIX)\ncommit $(GIT_COMMIT)\ncommit_short $(GIT_COMMIT_SHORT)"
-
-.PHONY: print-version
-print-version:
-	@echo "fury $(VERSION)\ntendermint $(TENDERMINT_VERSION)\ncosmos $(COSMOS_SDK_VERSION)"
-
-################################################################################
-###                             Project Settings                             ###
-################################################################################
+PACKAGES_SIMTEST=$(shell go list ./... | grep '/simulation')
+PACKAGES_UNITTEST=$(shell go list ./... | grep -v '/simulation' | grep -v '/cli_test')
+VERSION := $(shell echo $(shell git describe --tags) | sed 's/^v//')
+COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
-DOCKER:=docker
-DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace bufbuild/buf
-HTTPS_GIT := https://github.com/Incubus-Network/fury.git
+BINDIR ?= $(GOPATH)/bin
+SDK_PACK := $(shell go list -m github.com/cosmos/cosmos-sdk | sed  's/ /\@/g')
+NetworkType := $(shell if [ -z ${NetworkType} ]; then echo "mainnet"; else echo ${NetworkType}; fi)
+CURRENT_DIR = $(shell pwd)
+PROJECT_NAME = $(shell git remote get-url origin | xargs basename -s .git)
 
-################################################################################
-###                             Machine Info                                 ###
-################################################################################
-OS_FAMILY := $(shell uname -s)
-MACHINE := $(shell uname -m)
+# default mainnet EVM_CHAIN_ID
+EVM_CHAIN_ID ?= 710
 
-NATIVE_GO_OS := $(shell echo $(OS_FAMILY) | tr '[:upper:]' '[:lower:]')# Linux -> linux, Darwin -> darwin
+export GO111MODULE = on
 
-NATIVE_GO_ARCH := $(MACHINE)
-ifeq ($(MACHINE),x86_64)
-NATIVE_GO_ARCH := amd64# x86_64 -> amd64
-endif
-ifeq ($(MACHINE),aarch64)
-NATIVE_GO_ARCH := arm64# aarch64 -> arm64
-endif
-
-TARGET_GO_OS ?= $(NATIVE_GO_OS)
-TARGET_GO_ARCH ?= $(NATIVE_GO_ARCH)
-.PHONY: print-machine-info
-print-machine-info:
-	@echo "platform $(NATIVE_GO_OS)/$(NATIVE_GO_ARCH)"
-	@echo "target $(TARGET_GO_OS)/$(TARGET_GO_ARCH)"
-
-################################################################################
-###                             PATHS                                        ###
-################################################################################
-BUILD_DIR := build# build files
-BIN_DIR := $(BUILD_DIR)/bin# for binary dev dependencies
-BUILD_CACHE_DIR := $(BUILD_DIR)/.cache# caching for non-artifact outputs
-OUT_DIR := out# for artifact intermediates and outputs
-
-ROOT_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))# absolute path to root
-export PATH := $(ROOT_DIR)/$(BIN_DIR):$(PATH)# add local bin first in path
-
-.PHONY: print-path
-print-path:
-	@echo $(PATH)
-
-.PHONY: print-paths
-print-paths:
-	@echo "build $(BUILD_DIR)\nbin $(BIN_DIR)\ncache $(BUILD_CACHE_DIR)\nout $(OUT_DIR)"
-
-.PHONY: clean
-clean:
-	@rm -rf $(BIN_DIR) $(BUILD_CACHE_DIR) $(OUT_DIR)
-
-################################################################################
-###                             Dev Setup                                    ###
-################################################################################
-include $(BUILD_DIR)/deps.mk
-
-include $(BUILD_DIR)/proto.mk
-include $(BUILD_DIR)/proto-deps.mk
-
-#export GO111MODULE = on
 # process build tags
+
 build_tags = netgo
 ifeq ($(LEDGER_ENABLED),true)
   ifeq ($(OS),Windows_NT)
@@ -125,13 +42,11 @@ ifeq ($(LEDGER_ENABLED),true)
   endif
 endif
 
-ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
+ifeq ($(WITH_CLEVELDB),yes)
   build_tags += gcc
 endif
-
-ifeq (secp,$(findstring secp,$(COSMOS_BUILD_OPTIONS)))
-  build_tags += libsecp256k1_sdk
-endif
+build_tags += $(BUILD_TAGS)
+build_tags := $(strip $(build_tags))
 
 whitespace :=
 whitespace += $(whitespace)
@@ -142,60 +57,63 @@ build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 
 ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=fury \
 		  -X github.com/cosmos/cosmos-sdk/version.AppName=fury \
-		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION_NUMBER) \
-		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(GIT_COMMIT) \
-		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)" \
-		  -X github.com/tendermint/tendermint/version.TMCoreSemVer=$(TENDERMINT_VERSION)
+		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
+		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
+		  -X github.com/fanfury-sports/furyhub/types.EIP155ChainID=$(EVM_CHAIN_ID) \
+		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
-# DB backend selection
-ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
+ifeq ($(WITH_CLEVELDB),yes)
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-endif
-ifeq (badgerdb,$(findstring badgerdb,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=badgerdb
-  BUILD_TAGS += badgerdb
-endif
-# handle rocksdb
-ifeq (rocksdb,$(findstring rocksdb,$(COSMOS_BUILD_OPTIONS)))
-  CGO_ENABLED=1
-  BUILD_TAGS += rocksdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
-endif
-# handle boltdb
-ifeq (boltdb,$(findstring boltdb,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_TAGS += boltdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=boltdb
-endif
-
-ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -w -s
 endif
 ldflags += $(LDFLAGS)
 ldflags := $(strip $(ldflags))
 
-build_tags += $(BUILD_TAGS)
-build_tags := $(strip $(build_tags))
-
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
-# check for nostrip option
-ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_FLAGS += -trimpath
-endif
 
-all: install
+# The below include contains the tools target.
 
-build: go.sum
-ifeq ($(OS), Windows_NT)
-	go build -mod=readonly $(BUILD_FLAGS) -o out/$(shell go env GOOS)/fury.exe ./cmd/fury
+all: tools install lint
+
+# The below include contains the tools.
+include contrib/devtools/Makefile
+
+build: check-evm-chain-id go.sum
+ifeq ($(OS),Windows_NT)
+	@go build $(BUILD_FLAGS) -o build/fury.exe ./cmd/fury
 else
-	go build -mod=readonly $(BUILD_FLAGS) -o out/$(shell go env GOOS)/fury ./cmd/fury
+	@go build $(BUILD_FLAGS) -o build/fury ./cmd/fury
 endif
 
-build-linux: go.sum
+build-linux: check-evm-chain-id go.sum
 	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
 
-install: go.sum
-	go install -mod=readonly $(BUILD_FLAGS) ./cmd/fury
+build-all-binary: check-evm-chain-id go.sum
+	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-linux-amd64 ./cmd/fury
+	LEDGER_ENABLED=false GOOS=linux GOARCH=arm64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-linux-arm64 ./cmd/fury
+	LEDGER_ENABLED=false GOOS=windows GOARCH=amd64 go build $(BUILD_FLAGS) CGO_ENABLED=1 -o build/fury-windows-amd64.exe ./cmd/fury
+
+build-contract-tests-hooks:
+ifeq ($(OS),Windows_NT)
+	go build -mod=readonly $(BUILD_FLAGS) -o build/contract_tests.exe ./cmd/contract_tests
+else
+	go build -mod=readonly $(BUILD_FLAGS) -o build/contract_tests ./cmd/contract_tests
+endif
+
+install: check-evm-chain-id go.sum
+	@go install $(BUILD_FLAGS) ./cmd/fury
+
+check-evm-chain-id:
+	@echo "note: EVM_CHAIN_ID is $(EVM_CHAIN_ID)"
+
+update-swagger-docs: statik proto-swagger-gen
+	$(BINDIR)/statik -src=lite/swagger-ui -dest=lite -f -m
+	@if [ -n "$(git status --porcelain)" ]; then \
+        echo "\033[91mSwagger docs are out of sync!!!\033[0m";\
+        exit 1;\
+    else \
+    	echo "\033[92mSwagger docs are in sync\033[0m";\
+    fi
+.PHONY: update-swagger-docs
 
 ########################################
 ### Tools & dependencies
@@ -203,129 +121,107 @@ install: go.sum
 go-mod-cache: go.sum
 	@echo "--> Download go modules to local cache"
 	@go mod download
-PHONY: go-mod-cache
 
 go.sum: go.mod
-	@echo "--> Ensuring dependencies have not been modified"
+	@echo "--> Ensure dependencies have not been modified"
 	@go mod verify
 
-########################################
-### Linting
+draw-deps:
+	@# requires brew install graphviz or apt-get install graphviz
+	go get github.com/RobotsAndPencils/goviz
+	@goviz -i ./cmd/fury -d 2 | dot -Tpng -o dependency-graph.png
 
-# Check url links in the repo are not broken.
-# This tool checks local markdown links as well.
-# Set to exclude riot links as they trigger false positives
-link-check:
-	@go get -u github.com/raviqqe/liche@f57a5d1c5be4856454cb26de155a65a4fd856ee3
-	liche -r . --exclude "^http://127.*|^https://riot.im/app*|^http://fury-testnet*|^https://testnet-dex*|^https://fury3.data.fury.io*|^https://ipfs.io*|^https://apps.apple.com*|^https://fury.quicksync.io*"
+clean:
+	rm -rf snapcraft-local.yaml build/ tmp-swagger-gen/
 
-
-lint:
-	golangci-lint run
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" | xargs gofmt -d -s
-	go mod verify
-.PHONY: lint
-
-format:
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs gofmt -w -s
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs misspell -w
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs goimports -w -local github.com/tendermint
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs goimports -w -local github.com/cosmos/cosmos-sdk
-	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs goimports -w -local github.com/incubus-network/fury
-.PHONY: format
+distclean: clean
+	rm -rf vendor/
 
 ###############################################################################
-###                                Localnet                                 ###
+###                                Protobuf                                 ###
 ###############################################################################
 
-# Build docker image and tag as fury/fury:local
-docker-build:
-	DOCKER_BUILDKIT=1 $(DOCKER) build -t fury/fury:local .
+protoVer=v0.7
+protoImageName=tendermintdev/sdk-proto-gen:$(protoVer)
+containerProtoGen=$(PROJECT_NAME)-proto-gen-$(protoVer)
+containerProtoGenAny=$(PROJECT_NAME)-proto-gen-any-$(protoVer)
+containerProtoGenSwagger=$(PROJECT_NAME)-proto-gen-swagger-$(protoVer)
+containerProtoFmt=$(PROJECT_NAME)-proto-fmt-$(protoVer)
+proto-all: proto-tools proto-gen proto-swagger-gen
 
-docker-build-rocksdb:
-	DOCKER_BUILDKIT=1 $(DOCKER) build -f Dockerfile-rocksdb -t fury/fury:local .
+proto-gen:
+	@./scripts/protocgen.sh
 
-build-docker-local-fury:
-	@$(MAKE) -C networks/local
-
-# Run a 4-node testnet locally
-localnet-start: build-linux localnet-stop
-	@if ! [ -f build/node0/fud/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/fud:Z fury/furynode testnet --v 4 -o . --starting-ip-address 192.168.10.2 --keyring-backend=test ; fi
-	docker-compose up -d
-
-localnet-stop:
-	docker-compose down
-
-# Launch a new single validator chain
-start:
-	./contrib/devnet/init-new-chain.sh
-	fury start
-
-#proto-format:
-#@echo "Formatting Protobuf files"
-#@if docker ps -a --format '{{.Names}}' | grep -Eq "^${containerProtoFmt}$$"; then docker start -a $(containerProtoFmt); else docker run --name $(containerProtoFmt) -v $(CURDIR):/workspace --workdir /workspace tendermintdev/docker-build-proto \
-#find ./ -not -path "./third_party/*" -name *.proto -exec clang-format -style=file -i {} \; ; fi
+proto-swagger-gen:
+	@echo "Generating Protobuf Swagger"
+	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${containerProtoGenSwagger}$$"; then docker start -a $(containerProtoGenSwagger); else docker run --name $(containerProtoGenSwagger) -v $(CURDIR):/workspace --workdir /workspace $(protoImageName) \
+		sh ./scripts/protoc-swagger-gen.sh; fi
 
 ########################################
 ### Testing
 
-# TODO tidy up cli tests to use same -Enable flag as simulations, or the other way round
-# TODO -mod=readonly ?
-# build dependency needed for cli tests
-test-all: build
-	# basic app tests
-	@go test ./app -v
-	# basic simulation (seed "4" happens to not unbond all validators before reaching 100 blocks)
-	#@go test ./app -run TestFullAppSimulation        -Enabled -Commit -NumBlocks=100 -BlockSize=200 -Seed 4 -v -timeout 24h
-	# other sim tests
-	#@go test ./app -run TestAppImportExport          -Enabled -Commit -NumBlocks=100 -BlockSize=200 -Seed 4 -v -timeout 24h
-	#@go test ./app -run TestAppSimulationAfterImport -Enabled -Commit -NumBlocks=100 -BlockSize=200 -Seed 4 -v -timeout 24h
-	# AppStateDeterminism does not use Seed flag
-	#@go test ./app -run TestAppStateDeterminism      -Enabled -Commit -NumBlocks=100 -BlockSize=200 -Seed 4 -v -timeout 24h
 
-# run module tests and short simulations
-test-basic: test
-	@go test ./app -run TestFullAppSimulation        -Enabled -Commit -NumBlocks=5 -BlockSize=200 -Seed 4 -v -timeout 2m
-	# other sim tests
-	@go test ./app -run TestAppImportExport          -Enabled -Commit -NumBlocks=5 -BlockSize=200 -Seed 4 -v -timeout 2m
-	@go test ./app -run TestAppSimulationAfterImport -Enabled -Commit -NumBlocks=5 -BlockSize=200 -Seed 4 -v -timeout 2m
-	@# AppStateDeterminism does not use Seed flag
-	@go test ./app -run TestAppStateDeterminism      -Enabled -Commit -NumBlocks=5 -BlockSize=200 -Seed 4 -v -timeout 2m
+test: test-unit
+test-all: test-race test-cover
 
-# run end-to-end tests (local docker container must be built, see docker-build)
-test-e2e: docker-build
-	go test -failfast -count=1 -v ./tests/e2e/...
+test-unit:
+	@VERSION=$(VERSION) go test -mod=readonly -tags='ledger test_ledger_mock' ${PACKAGES_UNITTEST}
 
-test:
-	@go test $$(go list ./... | grep -v 'contrib' | grep -v 'tests/e2e')
+test-sim-nondeterminism-fast:
+	@echo "Running non-determinism test..."
+	@cd ${CURRENT_DIR}/app && go test -mod=readonly -run TestAppStateDeterminism -Enabled=true \
+		-NumBlocks=10 -BlockSize=200 -Commit=true -Period=0 -v -timeout 24h
 
-# Run cli integration tests
-# `-p 4` to use 4 cores, `-tags cli_test` to tell go not to ignore the cli package
-# These tests use the `fud` or `kvcli` binaries in the build dir, or in `$BUILDDIR` if that env var is set.
-test-cli: build
-	@go test ./cli_test -tags cli_test -v -p 4
+test-sim-import-export: runsim
+	@echo "Running application import/export simulation. This may take several minutes..."
+	@cd ${CURRENT_DIR}/app && $(BINDIR)/runsim -Jobs=4 -SimAppPkg=. -ExitOnFail 50 5 TestAppImportExport
 
-# Run tests for migration cli command
-test-migrate:
-	@go test -v -count=1 ./migrate/...
+test-sim-after-import: runsim
+	@echo "Running application simulation-after-import. This may take several minutes..."
+	@cd ${CURRENT_DIR}/app && $(BINDIR)/runsim -Jobs=4 -SimAppPkg=. -ExitOnFail 50 5 TestAppSimulationAfterImport
 
-# Kick start lots of sims on an AWS cluster.
-# This submits an AWS Batch job to run a lot of sims, each within a docker image. Results are uploaded to S3
-start-remote-sims:
-	# build the image used for running sims in, and tag it
-	docker build -f simulations/Dockerfile -t fury/fury-sim:master .
-	# push that image to the hub
-	docker push fury/fury-sim:master
-	# submit an array job on AWS Batch, using 1000 seeds, spot instances
-	aws batch submit-job \
-		-—job-name "master-$(VERSION)" \
-		-—job-queue “simulation-1-queue-spot" \
-		-—array-properties size=1000 \
-		-—job-definition fury-sim-master \
-		-—container-override environment=[{SIM_NAME=master-$(VERSION)}]
+test-race:
+	@VERSION=$(VERSION) go test -mod=readonly -race -tags='ledger test_ledger_mock' ./...
 
-update-futool:
-	git submodule update
-	cd tests/e2e/futool && make install
+test-cover:
+	@go test -mod=readonly -timeout 30m -race -coverprofile=coverage.txt -covermode=atomic -tags='ledger test_ledger_mock' ./...
 
-.PHONY: all build-linux install clean build test test-cli test-all test-rest test-basic start-remote-sims
+lint: golangci-lint
+	golangci-lint run
+	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./lite/statik/statik.go" -not -path "*.pb.go" | xargs gofmt -d -s
+	go mod verify
+
+format:
+	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./lite/statik/statik.go" -not -path "*.pb.go" | xargs gofmt -w -s
+	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./lite/statik/statik.go" -not -path "*.pb.go" | xargs misspell -w
+	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -path "./lite/statik/statik.go" -not -path "*.pb.go" | xargs goimports -w -local github.com/fanfury-sports/furyhub
+
+benchmark:
+	@go test -mod=readonly -bench=. ./...
+
+
+########################################
+### Local validator nodes using docker and docker-compose
+
+testnet-init:
+	@if ! [ -f build/nodecluster/node0/fury/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/home fanfury-sports/furyhub fury testnet --v 4 --output-dir /home/nodecluster --chain-id furyhub-test --keyring-backend test --starting-ip-address 192.168.10.2 ; fi
+	@echo "To install jq command, please refer to this page: https://stedolan.github.io/jq/download/"
+	@jq '.app_state.auth.accounts+= [{"@type":"/cosmos.auth.v1beta1.BaseAccount","address":"furyaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","pub_key":null,"account_number":"0","sequence":"0"}] | .app_state.bank.balances+= [{"address":"furyaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx","coins":[{"denom":"ufury","amount":"1000000000000"}]}]' build/nodecluster/node0/fury/config/genesis.json > build/genesis_temp.json ;
+	@sudo cp build/genesis_temp.json build/nodecluster/node0/fury/config/genesis.json
+	@sudo cp build/genesis_temp.json build/nodecluster/node1/fury/config/genesis.json
+	@sudo cp build/genesis_temp.json build/nodecluster/node2/fury/config/genesis.json
+	@sudo cp build/genesis_temp.json build/nodecluster/node3/fury/config/genesis.json
+	@rm build/genesis_temp.json
+	@echo "Faucet address: furyaa1ljemm0yznz58qxxs8xyak7fashcfxf5lgl4zjx" ;
+	@echo "Faucet coin amount: 1000000000000ufury"
+	@echo "Faucet key seed: tube lonely pause spring gym veteran know want grid tired taxi such same mesh charge orient bracket ozone concert once good quick dry boss"
+
+testnet-start:
+	docker-compose up -d
+
+testnet-stop:
+	docker-compose down
+
+testnet-clean:
+	docker-compose down
+	sudo rm -rf build/*
