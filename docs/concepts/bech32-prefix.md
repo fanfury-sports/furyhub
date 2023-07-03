@@ -10,10 +10,10 @@ Bech32 is a new Bitcoin address format proposed by Pieter Wuille and Greg Maxwel
 
 | HRP | Definition                              |
 | --- | --------------------------------------- |
-| blackaa | FURYhub Account Address                 |
-| blackap | FURYhub Account Public Key              |
+| furyaa | FURYhub Account Address                 |
+| furyap | FURYhub Account Public Key              |
 | iva | FURYhub Validator's Operator Address    |
-| blackvp | FURYhub Validator's Operator Public Key |
+| furyvp | FURYhub Validator's Operator Public Key |
 | ica | Tendermint Consensus Address            |
 | icp | Tendermint Consensus Public Key         |
 
@@ -29,10 +29,10 @@ Account Key, aka. [Application Key](validator-faq.md#application-key). Once you 
 
 ```bash
 NAME:    TYPE:           ADDRESS:                                PUBKEY:
-test1    local    blackaa18ekc4dswwrh2a6lfyev4tr25h5y76jkpclyxkz    blackap1addwnpepqgxa40ww28uy9q46gg48g6ulqdzwupyjcwfumgfjpvz7krmg5mrnwk5xq9l
+test1    local    furyaa18ekc4dswwrh2a6lfyev4tr25h5y76jkpclyxkz    furyap1addwnpepqgxa40ww28uy9q46gg48g6ulqdzwupyjcwfumgfjpvz7krmg5mrnwk5xq9l
 ```
 
-This means you have created a new address `blackaa18ekc4dswwrh2a6lfyev4tr25h5y76jkpclyxkz`, with the HRP `blackaa`. And its public key could be encoded into `blackap1addwnpepqgxa40ww28uy9q46gg48g6ulqdzwupyjcwfumgfjpvz7krmg5mrnwk5xq9l`, with the HRP `blackap`.
+This means you have created a new address `furyaa18ekc4dswwrh2a6lfyev4tr25h5y76jkpclyxkz`, with the HRP `furyaa`. And its public key could be encoded into `furyap1addwnpepqgxa40ww28uy9q46gg48g6ulqdzwupyjcwfumgfjpvz7krmg5mrnwk5xq9l`, with the HRP `furyap`.
 
 ## Validator Key Example
 
@@ -46,5 +46,5 @@ fury tendermint show-validator --home=<fury-home>
 Example Output:
 
 ```bash
-blackcp1zcjduepqzuz420weqehs3mq0qny54umfk5r78yup6twtdt7mxafrprms5zqsjeuxvx
+furycp1zcjduepqzuz420weqehs3mq0qny54umfk5r78yup6twtdt7mxafrprms5zqsjeuxvx
 ```

@@ -63,7 +63,7 @@ fury query gov proposals
 ### Query proposals by conditions
 
 ```bash
-fury query gov proposals --limit=3 --status=Passed --depositor=<blackaa...>
+fury query gov proposals --limit=3 --status=Passed --depositor=<furyaa...>
 ```
 
 ## fury query gov vote
@@ -77,7 +77,7 @@ fury query gov vote [proposal-id] [voter-addr] [flags]
 ### Query a vote
 
 ```bash
-fury query gov vote <proposal-id> <blackaa...>
+fury query gov vote <proposal-id> <furyaa...>
 ```
 
 ## fury query gov votes
@@ -105,7 +105,7 @@ fury query gov deposit [proposal-id] [depositer-addr] [flags]
 ### Query a deposit of a proposal
 
 ```bash
-fury query gov deposit <proposal-id> <blackaa...>
+fury query gov deposit <proposal-id> <furyaa...>
 ```
 
 ## fury query gov deposits
@@ -191,8 +191,8 @@ where proposal.json contains:
   "messages": [
     {
       "@type": "/cosmos.bank.v1beta1.MsgSend",
-      "from_address": "blackaa1...", // The gov module module address
-      "to_address": "blackaa1...",
+      "from_address": "furyaa1...", // The gov module module address
+      "to_address": "furyaa1...",
       "amount":[{"denom": "stake","amount": "10"}]
     }
   ],
@@ -222,7 +222,7 @@ Where proposal.json contains:
 {
     "title": "Community Pool Spend",
     "description": "Pay me some Atoms!",
-    "recipient": "blackaa1mjk4p68mmulwla3x5uzlgjwsc3zrms448rel3q",
+    "recipient": "furyaa1mjk4p68mmulwla3x5uzlgjwsc3zrms448rel3q",
     "amount": "1000ufury",
     "deposit": "1000ufury"
 }

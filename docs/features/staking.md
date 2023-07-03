@@ -58,8 +58,8 @@ Example Output:
 ```bash
 - name: node0
     type: local
-    address: blackaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx
-    pubkey: blackap1addwnpepq03g7u43y3gwfz3pd4gkwz7d4mt600kzsc5cj2ysx58a5hp84qyduxtw28r
+    address: furyaa1w9lvhwlvkwqvg08q84n2k4nn896u9pqx93velx
+    pubkey: furyap1addwnpepq03g7u43y3gwfz3pd4gkwz7d4mt600kzsc5cj2ysx58a5hp84qyduxtw28r
     mnemonic: ""
     threshold: 0
     pubkeys: []
@@ -68,15 +68,15 @@ Example Output:
 Then, example command to query validator:
 
 ```bash
-fury q staking validator blackva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke
+fury q staking validator furyva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke
 ```
 
 Example Output:
 
 ```json
 {
-    "operator_address": "blackva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke",
-    "consensus_pubkey": "blackcp1zcjduepq9meszzqu54gpxvs4vzvuv85qvv5ef0egz3sde0ps4dvktcv77uds0kkhgf",
+    "operator_address": "furyva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke",
+    "consensus_pubkey": "furycp1zcjduepq9meszzqu54gpxvs4vzvuv85qvv5ef0egz3sde0ps4dvktcv77uds0kkhgf",
     "status": 3,
     "tokens": "100000000",
     "delegator_shares": "100000000.000000000000000000",
@@ -106,19 +106,19 @@ fury tx staking edit-validator --from=<key-name> --chain-id=furyhub --fees=0.3fu
 If you just want to be a delegator, you can skip the above steps.
 
 ```bash
-fury tx staking delegate blackva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke 1000fury --chain-id=furyhub --from=<key-name> --fees=0.3fury
+fury tx staking delegate furyva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke 1000fury --chain-id=furyhub --from=<key-name> --fees=0.3fury
 ```
 
 - Unbond tokens from a validator
 
 ```bash
-fury tx staking unbond blackva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke 1000fury --chain-id=furyhub --from=<key-name> --fees=0.3fury
+fury tx staking unbond furyva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke 1000fury --chain-id=furyhub --from=<key-name> --fees=0.3fury
 ```
   
 - Redelegate tokens to another validator
 
 ```bash
-fury tx staking redelegate blackva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke blackva1l2rsakp388kuv9k8qzq6lrm9taddae7fpx59wm 100fury --from mykey --chain-id=furyhub --from=<key-name> --fees=0.3fury
+fury tx staking redelegate furyva14n9md3sq9xwscs96za8n85m0j9y2yu3cagxgke furyva1l2rsakp388kuv9k8qzq6lrm9taddae7fpx59wm 100fury --from mykey --chain-id=furyhub --from=<key-name> --fees=0.3fury
 ```
 
 For other staking commands, please refer to [stake cli client](../cli-client/staking.md)

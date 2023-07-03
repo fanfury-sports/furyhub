@@ -41,9 +41,9 @@ done
 swagger-combine ./lite/config.json -o ./lite/swagger-ui/swagger.yaml -f yaml --continueOnConflictingPaths true --includeDefinitions true
 
 # replace APIs example
-sed -r -i 's/cosmos1[a-z,0-9]+/blackaa1sltcyjm5k0edlg59t47lsyw8gtgc3nudklntcq/g' ./lite/swagger-ui/swagger.yaml
-sed -r -i 's/cosmosvaloper1[a-z,0-9]+/blackva1sltcyjm5k0edlg59t47lsyw8gtgc3nudrwey98/g' ./lite/swagger-ui/swagger.yaml
-sed -r -i 's/cosmosvalconspub1[a-z,0-9]+/blackcp1zcjduepqwhwqn4h5v6mqa7k3kmy7cjzchsx5ptsrqaulwrgfmghy3k9jtdzs6rdddm/g' ./lite/swagger-ui/swagger.yaml
+sed -r -i 's/cosmos1[a-z,0-9]+/furyaa1sltcyjm5k0edlg59t47lsyw8gtgc3nudklntcq/g' ./lite/swagger-ui/swagger.yaml
+sed -r -i 's/cosmosvaloper1[a-z,0-9]+/furyva1sltcyjm5k0edlg59t47lsyw8gtgc3nudrwey98/g' ./lite/swagger-ui/swagger.yaml
+sed -r -i 's/cosmosvalconspub1[a-z,0-9]+/furycp1zcjduepqwhwqn4h5v6mqa7k3kmy7cjzchsx5ptsrqaulwrgfmghy3k9jtdzs6rdddm/g' ./lite/swagger-ui/swagger.yaml
 sed -i 's/Gaia/FURYhub/g' ./lite/swagger-ui/swagger.yaml
 sed -i 's/gaia/furyhub/g' ./lite/swagger-ui/swagger.yaml
 sed -i 's/cosmoshub/furyhub/g' ./lite/swagger-ui/swagger.yaml

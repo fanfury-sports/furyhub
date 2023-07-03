@@ -59,7 +59,7 @@ var (
 
 const nativeFuryMinUnit = "ufury"
 
-var PowerReduction = sdk.NewIntFromUint64(100000000000000000)
+var PowerReduction = sdk.NewIntFromUint64(1000000000)
 
 // get cmd to initialize all files for tendermint testnet and application
 func testnetCmd(mbm module.BasicManager, genBalIterator banktypes.GenesisBalancesIterator) *cobra.Command {
