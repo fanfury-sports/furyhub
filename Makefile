@@ -99,7 +99,7 @@ clean:
 # include $(BUILD_DIR)/proto.mk
 # include $(BUILD_DIR)/proto-deps.mk
 
-#export GO111MODULE = on
+export GO111MODULE = on
 # process build tags
 build_tags = netgo
 ifeq ($(LEDGER_ENABLED),true)
@@ -182,20 +182,123 @@ ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
   BUILD_FLAGS += -trimpath
 endif
 
-all: install
+###############################################################################
+###                                  Build                                  ###
+###############################################################################
 
-build: go.sum
-ifeq ($(OS), Windows_NT)
-	go build -mod=readonly $(BUILD_FLAGS) -o out/$(shell go env GOOS)/fury.exe ./cmd/fury
+BUILD_TARGETS := build install
+
+build: BUILD_ARGS=-o $(BUILDDIR)/
+build-linux:
+	GOOS=linux GOARCH=amd64 LEDGER_ENABLED=false $(MAKE) build
+
+$(BUILD_TARGETS): go.sum $(BUILDDIR)/
+	go $@ $(BUILD_FLAGS) $(BUILD_ARGS) ./...
+
+$(BUILDDIR)/:
+	mkdir -p $(BUILDDIR)/
+
+build-reproducible: go.sum
+	$(DOCKER) rm latest-build || true
+	$(DOCKER) run --volume=$(CURDIR):/sources:ro \
+        --env TARGET_PLATFORMS='linux/amd64' \
+        --env APP=black \
+        --env VERSION=$(VERSION) \
+        --env COMMIT=$(COMMIT) \
+        --env CGO_ENABLED=1 \
+        --env LEDGER_ENABLED=$(LEDGER_ENABLED) \
+        --name latest-build tendermintdev/rbuilder:latest
+	$(DOCKER) cp -a latest-build:/home/builder/artifacts/ $(CURDIR)/
+
+
+build-docker:
+	# TODO replace with kaniko
+	$(DOCKER) build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+	$(DOCKER) tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
+	# docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${COMMIT_HASH}
+	# update old container
+	$(DOCKER) rm black || true
+	# create a new container from the latest image
+	$(DOCKER) create --name black -t -i ${DOCKER_IMAGE}:latest black
+	# move the binaries to the ./build directory
+	mkdir -p ./build/
+	$(DOCKER) cp black:/usr/bin/black ./build/
+
+push-docker: build-docker
+	$(DOCKER) push ${DOCKER_IMAGE}:${DOCKER_TAG}
+	$(DOCKER) push ${DOCKER_IMAGE}:latest
+
+$(MOCKS_DIR):
+	mkdir -p $(MOCKS_DIR)
+
+distclean: clean tools-clean
+
+clean:
+	rm -rf \
+    $(BUILDDIR)/ \
+    artifacts/ \
+    tmp-swagger-gen/
+
+all: build
+
+build-all: tools build lint test
+
+.PHONY: distclean clean build-all
+
+###############################################################################
+###                          Tools & Dependencies                           ###
+###############################################################################
+
+TOOLS_DESTDIR  ?= $(GOPATH)/bin
+STATIK         = $(TOOLS_DESTDIR)/statik
+RUNSIM         = $(TOOLS_DESTDIR)/runsim
+
+# Install the runsim binary with a temporary workaround of entering an outside
+# directory as the "go get" command ignores the -mod option and will polute the
+# go.{mod, sum} files.
+#
+# ref: https://github.com/golang/go/issues/30515
+runsim: $(RUNSIM)
+$(RUNSIM):
+	@echo "Installing runsim..."
+	@go get github.com/cosmos/tools/cmd/runsim@master)
+
+statik: $(STATIK)
+$(STATIK):
+	@echo "Installing statik..."
+	@go get github.com/rakyll/statik@v0.1.6)
+
+docs-tools:
+ifeq (, $(shell which yarn))
+	@echo "Installing yarn..."
+	@npm install -g yarn
 else
-	go build -mod=readonly $(BUILD_FLAGS) -o out/$(shell go env GOOS)/fury ./cmd/fury
+	@echo "yarn already installed; skipping..."
 endif
 
-build-linux: go.sum
-	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
+tools: tools-stamp
+tools-stamp: docs-tools proto-tools statik runsim
+	# Create dummy file to satisfy dependency and avoid
+	# rebuilding when this Makefile target is hit twice
+	# in a row.
+	touch $@
 
-install: go.sum
-	go install -mod=readonly $(BUILD_FLAGS) ./cmd/fury
+tools-clean:
+	rm -f $(RUNSIM)
+	rm -f tools-stamp
+
+docs-tools-stamp: docs-tools
+	# Create dummy file to satisfy dependency and avoid
+	# rebuilding when this Makefile target is hit twice
+	# in a row.
+	touch $@
+
+.PHONY: runsim statik tools contract-tools docs-tools proto-tools  tools-stamp tools-clean docs-tools-stamp
+
+go.sum: go.mod
+	echo "Ensure dependencies have not been modified ..." >&2
+	go mod verify
+	go mod tidy
 
 ########################################
 ### Tools & dependencies
@@ -205,9 +308,6 @@ go-mod-cache: go.sum
 	@go mod download
 PHONY: go-mod-cache
 
-go.sum: go.mod
-	@echo "--> Ensuring dependencies have not been modified"
-	@go mod verify
 
 ########################################
 ### Linting
@@ -233,6 +333,54 @@ format:
 	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs goimports -w -local github.com/cosmos/cosmos-sdk
 	find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" -not -name '*.pb.go' | xargs goimports -w -local github.com/incubus-network/fury
 .PHONY: format
+
+
+
+###############################################################################
+###                              Documentation                              ###
+###############################################################################
+
+update-swagger-docs: statik
+	$(BINDIR)/statik -src=client/docs/swagger-ui -dest=client/docs -f -m
+	@if [ -n "$(git status --porcelain)" ]; then \
+        echo "\033[91mSwagger docs are out of sync!!!\033[0m";\
+        exit 1;\
+    else \
+        echo "\033[92mSwagger docs are in sync\033[0m";\
+    fi
+.PHONY: update-swagger-docs
+
+godocs:
+	@echo "--> Wait a few seconds and visit http://localhost:6060/pkg/github.com/merlin-network/black-fury/types"
+	godoc -http=:6060
+
+# Start docs site at localhost:8080
+docs-serve:
+	@cd docs && \
+	yarn && \
+	yarn run serve
+
+# Build the site into docs/.vuepress/dist
+build-docs:
+	@$(MAKE) docs-tools-stamp && \
+	cd docs && \
+	yarn && \
+	yarn run build
+
+# This builds a docs site for each branch/tag in `./docs/versions`
+# and copies each site to a version prefixed path. The last entry inside
+# the `versions` file will be the default root index.html.
+build-docs-versioned:
+	@$(MAKE) docs-tools-stamp && \
+	cd docs && \
+	while read -r branch path_prefix; do \
+		(git checkout $${branch} && npm install && VUEPRESS_BASE="/$${path_prefix}/" npm run build) ; \
+		mkdir -p ~/output/$${path_prefix} ; \
+		cp -r .vuepress/dist/* ~/output/$${path_prefix}/ ; \
+		cp ~/output/$${path_prefix}/index.html ~/output ; \
+	done < versions ;
+
+.PHONY: docs-serve build-docs build-docs-versioned
 
 ###############################################################################
 ###                                Localnet                                 ###
@@ -324,8 +472,5 @@ start-remote-sims:
 		-—job-definition fury-sim-master \
 		-—container-override environment=[{SIM_NAME=master-$(VERSION)}]
 
-update-futool:
-	git submodule update
-	cd tests/e2e/futool && make install
 
 .PHONY: all build-linux install clean build test test-cli test-all test-rest test-basic start-remote-sims
